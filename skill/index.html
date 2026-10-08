@@ -272,7 +272,7 @@ footer { border-top: 1px solid var(--line); padding: 28px 32px 40px; color: var(
           <a class="btn yel" href="#install">安装步骤</a>
           <a class="btn" href="#faq">常见问题</a>
         </div>
-        <div class="meta"><span><b>适用</b> Claude Code · Codex</span><span><b>系统</b> macOS</span><span><b>语言</b> 中文流程 · 英文成片</span><span><b>生图</b> Codex / API 可选</span><span><b>范围</b> 公司内部使用</span></div>
+        <div class="meta"><span><b>适用</b> Claude Code · Codex</span><span><b>系统</b> Mac · Windows</span><span><b>语言</b> 中文流程 · 英文成片</span><span><b>生图</b> Codex / API 可选</span><span><b>范围</b> 公司内部使用</span></div>
       </div>
       <div class="chat" aria-label="使用示例对话">
         <div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -381,15 +381,16 @@ footer { border-top: 1px solid var(--line); padding: 28px 32px 40px; color: var(
     </section>
 
     <section id="require">
-      <div class="h2"><div class="eyebrow">准备</div><h2>你只需要准备这几样</h2><p>只在 Mac 上验证过。其他软件和工具，安装时 AI 会帮你装好，不用管。</p></div>
+      <div class="h2"><div class="eyebrow">准备</div><h2>你只需要准备这几样</h2><p>Mac 和 Windows 电脑都可以。其他软件和工具，安装时 AI 会帮你装好，不用管。</p></div>
       <div class="tbl-box">
         <table>
           <thead><tr><th>准备什么</th><th>用来做什么</th><th>从哪来</th></tr></thead>
           <tbody>
+            <tr><td>一台电脑<span class="req">必需</span></td><td>运行</td><td>Mac，或 Windows 10 / 11</td></tr>
             <tr><td>Claude Code 或 Codex<span class="req">二选一</span></td><td>和 AI 对话，做片</td><td>Claude 桌面版的 Code 页，或 Codex 应用；登录好账号。两个都有也行</td></tr>
             <tr><td>安装包<span class="req">必需</span></td><td>安装和更新</td><td>公司群里的 <code>crst-safety-video-v1.6.zip</code></td></tr>
             <tr><td>MiniMax key<span class="req">配音需要</span></td><td>生成英文配音</td><td>找维护者要。没有也能先做选题、脚本和画面</td></tr>
-            <tr><td>生图账号<span class="opt">通常已有</span></td><td>画角色动作、背景</td><td>电脑上装了 ChatGPT 桌面版或 Codex 并已登录，就不用另外准备；也可以用 OpenAI 或 Gemini 的 key</td></tr>
+            <tr><td>生图账号<span class="opt">通常已有</span></td><td>画角色动作、背景</td><td>装了 Codex 并已登录（Mac 上装了 ChatGPT 桌面版也行），就不用另外准备；也可以用 OpenAI 或 Gemini 的 key（Windows 推荐）</td></tr>
           </tbody>
         </table>
       </div>
@@ -401,7 +402,7 @@ footer { border-top: 1px solid var(--line); padding: 28px 32px 40px; color: var(
         <li><b>从公司群下载安装包</b>文件名是 <code>crst-safety-video-v1.6.zip</code>（16 MB，以群里最新版本为准）。<b class="i">存到「下载」文件夹</b>：微信里右键文件选「另存为」；飞书、钉钉默认就存在「下载」里。不用自己解压。</li>
         <li><b>交给 Claude Code 或 Codex</b>打开任意一个，把 zip <b class="i">拖进对话框</b>（不拖也行，它会去「下载」里找），再粘贴这句话发送：
           <div class="prompt" style="margin-top:10px" data-copy="帮我安装 crst-safety-video skill。安装包是我拖进来的 zip；没拖的话，在「下载」文件夹里找 crst-safety-video-v 开头的 zip，找不到就问我。先解压到临时文件夹，读里面的 INSTALL.md，按它把 skill 装好、补齐依赖、跑环境检查，最后告诉我结果和还需要我做的事。">帮我安装 crst-safety-video skill。安装包是我拖进来的 zip；没拖的话，在「下载」文件夹里找 crst-safety-video-v 开头的 zip，找不到就问我。先解压到临时文件夹，读里面的 INSTALL.md，按它把 skill 装好、补齐依赖、跑环境检查，最后告诉我结果和还需要我做的事。</div></li>
-        <li><b>中途点允许</b>它要运行命令、联网、写入文件时会征求你同意，点允许。装工具要下载一两百 MB，等它跑完。少数电脑要装 Homebrew，需要输入开机密码：<b class="i">它会给你一行命令，请你粘贴到「终端」里运行</b>，这是唯一可能要你动手的地方。</li>
+        <li><b>中途点允许</b>它要运行命令、联网、写入文件时会征求你同意，点允许。装工具要下载一两百 MB，等它跑完。可能要你动手的只有两种情况：<b class="i">Windows</b> 弹出「是否允许此应用对你的设备进行更改」，点「是」；<b class="i">Mac</b> 少数电脑要装 Homebrew，需要开机密码，它会给你一行命令，请你粘贴到「终端」里运行。</li>
         <li><b>填配音 key，重新打开</b>它会在屏幕上<b class="i">弹出一个输入框</b>，把 MiniMax key 粘贴进去点「保存」就行，key 不会出现在对话里。最后<b class="i">重新打开 Claude Code</b>，或<b class="i">新开一个 Codex 会话</b>。</li>
       </ol>
       <div class="callout"><b>不要把 key 直接发在对话里。</b>需要填 key 时让 AI 弹出输入框；如果已经发了，请找维护者换一个新 key。</div>
@@ -444,9 +445,9 @@ footer { border-top: 1px solid var(--line); padding: 28px 32px 40px; color: var(
       <div class="h2"><div class="eyebrow">常见问题</div><h2>常见问题</h2></div>
       <div class="faq">
         <details><summary>我完全不懂代码，能用吗？</summary><p>能。这套流程就是按这个前提设计的：安装、配置、做片、排错都通过对话完成，AI 自己运行命令、改文件。你要做的是挑选题、挑风格、听配音、看成片提意见。</p></details>
-        <details><summary>AI 让我输入密码或在「终端」里运行命令，安全吗？</summary><p>只有安装 Homebrew（Mac 上常用的软件安装工具）时需要，命令来自 Homebrew 官网，要输入开机密码是正常的。其他情况 AI 不应该向你要密码；遇到可疑要求，先问维护者。</p></details>
+        <details><summary>AI 让我输入密码、点「允许更改」，安全吗？</summary><p>装工具时会遇到：Windows 上 winget 安装时弹出「是否允许此应用对你的设备进行更改」；Mac 上安装 Homebrew（常用的软件安装工具）要输入开机密码。这两种是正常的。其他情况 AI 不应该向你要密码；遇到可疑要求，先问维护者。公司电脑没有管理员权限的，找 IT 帮忙装。</p></details>
         <details><summary>装完了，但 Claude Code / Codex 里用不上</summary><p>装好后要<b>重新打开 Claude Code</b>，或<b>新开一个 Codex 会话</b>，已经开着的会话看不到新 skill。还不行，就说「检查一下 crst-safety-video 的环境」。</p></details>
-        <details><summary>弹出「需要安装命令行开发者工具」</summary><p>新电脑第一次装时 macOS 会弹这个框，点「安装」，等它装完（几分钟），再告诉 AI 继续。</p></details>
+        <details><summary>Mac 弹出「需要安装命令行开发者工具」</summary><p>新 Mac 第一次装时会弹这个框，点「安装」，等它装完（几分钟），再告诉 AI 继续。</p></details>
         <details><summary>没有 MiniMax key 能用吗？</summary><p>能先做选题、脚本、风格和画面，只有生成配音需要 key。拿到 key 后说「帮我填 MiniMax key」，再让它配音，画面会自动对齐新的配音。</p></details>
         <details><summary>没有 ChatGPT 账号能生图吗？</summary><p>能。有 OpenAI 或 Gemini 的 key，说「我想用 Gemini 生图，帮我配好」。公司有内部生图工具也能接，找维护者。</p></details>
         <details><summary>会不会泄露 key？</summary><p>key 通过弹出的输入框保存在你自己电脑上（<code>~/.config/crst-safety-video/</code>），不在安装包里，AI 和脚本都不会显示内容。只要不把 key 发在对话或群里就安全。</p></details>
@@ -455,17 +456,21 @@ footer { border-top: 1px solid var(--line); padding: 28px 32px 40px; color: var(
         <details><summary>可以换画风吗？</summary><p>可以，而且每支片都会换。skill 固定的是流程，不是画风。目前做过警示海报和纸片拼贴两种。插头电线的外观也会跟着画风调整，结构和校验不变。</p></details>
         <details><summary>能做 CRST 以外的品牌或主题吗？</summary><p>流程本身通用，但素材和规则是按 CRST 和用电安全写的。换品牌要替换模板里的 logo、二维码、产品图，以及 <code>references/product-and-brand.md</code> 里的产品事实表。</p></details>
         <details><summary>竖屏底部为什么总是空着？</summary><p>TikTok、Reels、Shorts 的底部约 380 像素会被平台的标题、按钮挡住，skill 规定这里不放重要内容。</p></details>
-        <details><summary>Windows 能用吗？</summary><p>没验证过，目前只支持 Mac。</p></details>
+        <details><summary>Windows 电脑能用吗？</summary><p>能。安装、配置、做片流程都已适配 Windows，装法和 Mac 一样：把安装包拖给 AI。区别只有两点：生图建议用 OpenAI 或 Gemini 的 key（Codex 在 Windows 上生图还不稳定）；Antigravity 生图只支持 Mac。Windows 版刚适配，遇到问题请把对话截图发给维护者。</p></details>
       </div>
     </section>
 
     <section id="tech">
       <div class="h2"><div class="eyebrow">给技术同事</div><h2>技术说明</h2><p>不懂代码的同事可以跳过这一节，下面这些 AI 都会自己处理。</p></div>
       <div class="faq">
-        <details><summary>手动安装（不用 AI）</summary><p>在「终端」里运行，版本号按实际改；缺的工具按环境检查里 → 的提示补上。</p><div class="code" data-copy="D=$(mktemp -d); unzip -q ~/Downloads/crst-safety-video-v1.6.zip -d $D
-zsh $D/crst-safety-video/scripts/install.sh">D=$(mktemp -d); unzip -q ~/Downloads/crst-safety-video-v1.6.zip -d $D
-zsh $D/crst-safety-video/scripts/install.sh</div><p>装到 <code>~/.claude/skills/crst-safety-video</code> 或 <code>~/.codex/skills/crst-safety-video</code>，两个都有时只放一份、另一个放链接。参数：<code>--claude</code> <code>--codex</code> <code>--force</code>（允许降级）。</p></details>
-        <details><summary>配置文件与命令行工具</summary><p>配置在 <code>~/.config/crst-safety-video/config.env</code>（权限 600）；环境变量优先。</p><div class="code">python3 ~/.claude/skills/crst-safety-video/scripts/doctor.py          <span class="c"># 环境检查</span>
+        <details><summary>手动安装（不用 AI）</summary><p>版本号按实际改；缺的工具按环境检查里 → 的提示补上。</p><p><b>Mac</b>，在「终端」里：</p><div class="code" data-copy="D=$(mktemp -d); python3 -m zipfile -e ~/Downloads/crst-safety-video-v1.6.zip $D
+python3 $D/crst-safety-video/scripts/install.py">D=$(mktemp -d); python3 -m zipfile -e ~/Downloads/crst-safety-video-v1.6.zip $D
+python3 $D/crst-safety-video/scripts/install.py</div><p><b>Windows</b>，先装 uv（<code>winget install --id astral-sh.uv -e</code>），再在 PowerShell 里：</p><div class="code" data-copy="$D = Join-Path $env:TEMP crst-install
+uv run --no-project python -m zipfile -e $HOME\Downloads\crst-safety-video-v1.6.zip $D
+uv run --no-project python $D\crst-safety-video\scripts\install.py">$D = Join-Path $env:TEMP crst-install
+uv run --no-project python -m zipfile -e $HOME\Downloads\crst-safety-video-v1.6.zip $D
+uv run --no-project python $D\crst-safety-video\scripts\install.py</div><p>装到 <code>~/.claude/skills/crst-safety-video</code> 或 <code>~/.codex/skills/crst-safety-video</code>（Windows 是 <code>C:\Users\名字\</code> 下的同名目录）。两个工具都有时只放一份，另一个放链接（Windows 用目录联接，不需要管理员）。参数：<code>--claude</code> <code>--codex</code> <code>--force</code>（允许降级）。</p></details>
+        <details><summary>配置文件与命令行工具</summary><p>配置在 <code>~/.config/crst-safety-video/config.env</code>（权限 600）；环境变量优先。Windows 上把 <code>python3</code> 换成 <code>uv run --no-project python</code>。</p><div class="code">python3 ~/.claude/skills/crst-safety-video/scripts/doctor.py          <span class="c"># 环境检查</span>
 python3 ~/.claude/skills/crst-safety-video/scripts/config.py show     <span class="c"># 看配置（key 不显示内容）</span>
 python3 ~/.claude/skills/crst-safety-video/scripts/config.py set MINIMAX_API_KEY   <span class="c"># 弹框输入 key</span>
 python3 ~/.claude/skills/crst-safety-video/scripts/config.py set IMAGEGEN_BACKEND gemini</div></details>
@@ -497,10 +502,10 @@ uv run --with playwright python render_film.py --o h --out ../成片/片名_16x9
 ├── references/           <span class="c"># 接线库、配音、生图、产品与品牌、验收、踩坑清单、范例</span>
 ├── library/ray2d/        <span class="c"># Ray 角色库：母版、提示词、姿势总览、使用说明</span>
 ├── scripts/
-│   ├── install.sh        <span class="c"># 安装 / 更新（Claude Code、Codex）</span>
+│   ├── install.py        <span class="c"># 安装 / 更新（Mac / Windows，Claude Code / Codex）</span>
 │   ├── doctor.py         <span class="c"># 环境检查</span>
 │   ├── config.py         <span class="c"># 读写配置（key 弹窗输入）</span>
-│   ├── new_project.sh    <span class="c"># 新建工程</span>
+│   ├── new_project.py    <span class="c"># 新建工程</span>
 │   ├── ray2d_library.py  <span class="c"># 角色库 ⇄ 项目同步（pull / push / sheet）</span>
 │   └── package.sh        <span class="c"># 打安装包</span>
 └── template/             <span class="c"># 工程模板</span>
@@ -513,7 +518,7 @@ uv run --with playwright python render_film.py --o h --out ../成片/片名_16x9
     <section id="versions">
       <div class="h2"><div class="eyebrow">版本记录</div><h2>版本记录</h2></div>
       <ol class="versions">
-        <li><b>v1.6</b><span>2026-10-08</span><p>改为安装包分发、交给 AI 安装：不需要 GitHub 账号；包里新增写给 AI 的 INSTALL.md，Claude Code 或 Codex 按电脑实际情况安装，出错能换路；更新时旧版自动备份，自己补的角色姿势自动保留。</p></li>
+        <li><b>v1.6</b><span>2026-10-08</span><p>支持 Windows；改为安装包分发、交给 AI 安装：不需要 GitHub 账号；包里新增写给 AI 的 INSTALL.md，Claude Code 或 Codex 按电脑实际情况安装，出错能换路；更新时旧版自动备份，自己补的角色姿势自动保留。</p></li>
         <li><b>v1.5</b><span>2026-10-08</span><p>同时支持 Codex：安装脚本自动装给本机的 Claude Code 和 Codex，仓库只留一份；补充在 Codex 里运行的注意事项。</p></li>
         <li><b>v1.4</b><span>2026-10-08 · 上传 GitHub</span><p>生图后端可换：本机 Codex、OpenAI 兼容 API、Gemini API、Antigravity、自定义命令；key 统一放配置文件；新增安装脚本和环境检查。</p></li>
         <li><b>v1.3</b><span>2026-10-08</span><p>新增 Ray 2D 角色库（10 个姿势，含口型和眨眼），角色动画拆成独立模块；新增库同步和打包脚本；帽徽按帽檐角度贴正。</p></li>
