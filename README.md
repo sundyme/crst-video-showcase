@@ -14,3 +14,7 @@
 > 按 https://github.com/sundyme/crst-video-showcase 里的 DEPLOY.md，把网页部署到公司群晖 NAS，并设置自动更新
 
 AI 会照 [DEPLOY.md](DEPLOY.md) 一步步做，需要你在群晖后台点的地方会列清单给你。部署用的脚本在 `deploy/`。
+
+同一套脚本也能把别的公开静态网页仓库部署到 NAS，例如：
+
+> 按 https://github.com/sundyme/crst-video-showcase 里的 DEPLOY.md，把 https://github.com/sundyme/huashu-explainer 也部署到公司群晖 NAS，并设置自动更新

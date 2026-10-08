@@ -1,6 +1,6 @@
 # 部署到公司群晖 NAS（写给帮忙部署的 AI：Codex 或 Claude Code）
 
-用户请你把这个仓库里的网页（「CRST 短片制作实录」和 Skill 介绍页）部署到公司内网的群晖 NAS，并让它以后自动更新。用户多半不懂代码：
+用户请你把网页部署到公司内网的群晖 NAS，并让它以后自动更新。默认是这个仓库（「CRST 短片制作实录」和 Skill 介绍页）；用户也可能要部署别的静态网页仓库，见下面「部署别的网页仓库」。用户多半不懂代码：
 
 - 全程用中文、大白话说明你在做什么。
 - 能自己做的直接做。
@@ -10,6 +10,17 @@
 
 - 同事在内网用 `http://<NAS 地址>/crst-video/` 打开短片实录，`http://<NAS 地址>/crst-video/skill/` 打开 Skill 介绍页，视频能播放。
 - 这个仓库更新后，NAS 上的网页能自动跟上（每天至少一次）。
+
+## 部署别的网页仓库
+
+同一套脚本能部署任何**公开的、首页是根目录 `index.html` 的静态网页仓库**（GitHub Pages 那种），例如 `sundyme/huashu-explainer`。做法和下面完全一样，只是：
+
+- 每个网页一个文件夹：给脚本多加两个参数 `<仓库 owner/名字> <文件夹名>`，文件夹名一般就用仓库名（如 `huashu-explainer`）。网址是 `http://<NAS 地址>/<文件夹名>/`。
+- 路线 A：`site-sync.sh` 只放一份，每个网页在 DSM 里各建一个定时任务（或者在同一个任务里写多行命令）。
+- 路线 B：`push_to_nas.py <web 路径> <仓库> <文件夹名>`。
+- 先确认这个网页没有后台：它不能依赖服务器端程序、登录或接口。纯 HTML/JS/CSS 的交互都没问题。页面引用了国外 CDN 上的脚本（不是字体）的话，提醒用户在内网可能加载不了。
+
+不需要修改那个仓库，也不需要往里面加文件。
 
 ## 先问用户 / 先确认
 
@@ -32,27 +43,29 @@
 
 不依赖任何电脑开机。
 
-1. **把同步脚本放到 web 共享文件夹，名字叫 `crst-video-sync.sh`**。直接从 GitHub 下载原文件，不要自己重新输入（必须保持 LF 换行，CRLF 会导致脚本在 NAS 上运行失败）：
-   - Mac：`curl -fsSL https://raw.githubusercontent.com/sundyme/crst-video-showcase/main/deploy/sync_from_github.sh -o /Volumes/web/crst-video-sync.sh`
-   - Windows：`curl.exe -fsSL https://raw.githubusercontent.com/sundyme/crst-video-showcase/main/deploy/sync_from_github.sh -o \\<NAS 地址>\web\crst-video-sync.sh`
+1. **把同步脚本放到 web 共享文件夹，名字叫 `site-sync.sh`**。直接从 GitHub 下载原文件，不要自己重新输入（必须保持 LF 换行，CRLF 会导致脚本在 NAS 上运行失败）：
+   - Mac：`curl -fsSL https://raw.githubusercontent.com/sundyme/crst-video-showcase/main/deploy/sync_from_github.sh -o /Volumes/web/site-sync.sh`
+   - Windows：`curl.exe -fsSL https://raw.githubusercontent.com/sundyme/crst-video-showcase/main/deploy/sync_from_github.sh -o \\<NAS 地址>\web\site-sync.sh`
 2. **请用户在 DSM 里建定时任务**（你没法操作 DSM 网页后台）。把下面这份清单发给用户：
    1. 打开「控制面板 → 任务计划 → 新增 → 计划的任务 → 用户定义的脚本」。
    2. 常规：任务名填 `CRST 网页同步`，用户选 **root**。
    3. 计划：每天一次，例如 03:00。想更快同步可以选每小时。
-   4. 任务设置 → 运行命令，填：`sh /volume1/web/crst-video-sync.sh`
+   4. 任务设置 → 运行命令，填：`sh /volume1/web/site-sync.sh`
+      - 部署别的网页时，在后面加参数，例如 `sh /volume1/web/site-sync.sh sundyme/huashu-explainer huashu-explainer`。
       - web 文件夹不在 volume1 的，按 File Station 里 web 文件夹「属性」显示的位置改。
    5. 保存，在列表里选中这个任务，点「运行」，先执行一次。
 3. 用户说运行过了，你做「验收」。第一次下载约 60 MB，等一两分钟再验收。打不开的话：
    - 请用户在任务计划里看这个任务的运行结果。
    - 如果是网络错误，说明 NAS 不能访问 GitHub，改走路线 B。
 
-如果用户开了 SSH，并且愿意自己在终端里输入密码，也可以请他运行 `ssh <管理员账号>@<NAS 地址>`，登录后运行 `sudo sh /volume1/web/crst-video-sync.sh` 来手动执行一次。定时任务仍然建议在 DSM 的任务计划里建。
+如果用户开了 SSH，并且愿意自己在终端里输入密码，也可以请他运行 `ssh <管理员账号>@<NAS 地址>`，登录后运行 `sudo sh /volume1/web/site-sync.sh` 来手动执行一次。定时任务仍然建议在 DSM 的任务计划里建。
 
 ## 路线 B：由这台电脑推送到 NAS
 
 适合 NAS 不能访问外网的情况。
 
-1. **下载推送脚本并运行**。它会从 GitHub 下载最新网页，完整复制成 `crst-video.new`，检查后再替换旧的 `crst-video`：
+1. **下载推送脚本并运行**。它会从 GitHub 下载最新网页，完整复制成 `<文件夹名>.new`，检查后再替换旧版：
+   - 部署别的网页时，在命令末尾加 `<仓库 owner/名字> <文件夹名>`。
    - 下载：`https://raw.githubusercontent.com/sundyme/crst-video-showcase/main/deploy/push_to_nas.py`，存到本机任意目录。
    - Mac：`python3 push_to_nas.py /Volumes/web`
    - Windows：`python push_to_nas.py \\<NAS 地址>\web`
@@ -67,7 +80,7 @@
 - `curl -s -o /dev/null -w "%{http_code}" http://<NAS 地址>/crst-video/`：应该是 200。
 - `curl -s -o /dev/null -w "%{http_code}" http://<NAS 地址>/crst-video/skill/`：应该是 200。
 - `curl -s -o /dev/null -w "%{http_code}" http://<NAS 地址>/crst-video/media/mistakes_h.mp4`：应该是 200。
-- 最后把 `http://<NAS 地址>/crst-video/` 发给用户，告诉他可以转给同事。如果 IT 配了内网域名，用域名更好记。
+- 最后把网页地址（例如 `http://<NAS 地址>/crst-video/`）发给用户，告诉他可以转给同事。如果 IT 配了内网域名，用域名更好记。
 
 ## 出错时
 
@@ -78,12 +91,13 @@
 | 404 | 确认 `web/crst-video/index.html` 存在；Web Station 默认服务器的根目录应是 web 共享文件夹 |
 | 连接被拒或超时 | Web Station 没装 / 没启用，或者防火墙没放行 80 端口，见「先问用户」第 2 条 |
 | 任务运行报 `$'\r': command not found` | 脚本被转成了 CRLF。按路线 A 第 1 步重新用 curl 下载覆盖 |
+| 页面打开慢、字体和 GitHub 版不一样 | 正常。两个脚本都会把 Google Fonts 改成后台加载（国内常连不上，原样会让首屏卡二三十秒）；连不上时用系统字体 |
 | Windows 上 `\\<NAS 地址>\web` 打不开 | 请用户在资源管理器里先打开一次并输入群晖账号密码，勾选「记住凭据」 |
 
 ## 规矩
 
 - 不索要、不打印任何密码。需要登录时请用户自己在系统窗口或终端里输入。
-- 只动 web 共享文件夹里的 `crst-video`、`crst-video.new`、`crst-video.old` 和 `crst-video-sync.sh`，不碰里面的其他东西。
+- 只动 web 共享文件夹里你部署的网页文件夹（及同名的 `.new`、`.old`、`.<文件夹名>-tmp`）和 `site-sync.sh`，不碰里面的其他东西。部署前看一下目标文件夹是否已存在、是不是别人的东西，是的话换个名字或先问用户。
 - 除了上面写到的，不改群晖的其他设置。要改先问用户。
 - 结束时给用户一个简短清单：
   - 网页地址；
