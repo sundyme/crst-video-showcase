@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<title>crst-safety-video Skill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap">
+<style>
+/* 说明书：左侧固定目录，右侧正文；与「CRST 短片制作实录」同一套浅色＋藏青＋品牌黄 */
+:root {
+  color-scheme: light;
+  --paper: #F5F6F8; --white: #FFFFFF; --ink: #121A2E; --ink-2: #3B465E; --muted: #6A7489; --line: #E1E4EA;
+  --navy: #121A2E; --navy-2: #1B2540; --navy-line: #2C385A; --on-navy: #EEF1F7; --on-navy-muted: #9BA5BC;
+  --yel: #FFC530; --yel-ink: #8A5A00; --teal: #1F9F86; --red: #C8402F;
+  --f-cn: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --f-disp: "Barlow Condensed", "Arial Narrow", "Noto Sans SC", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --r: 14px; --shadow: 0 1px 2px rgba(18,26,46,.06), 0 8px 28px rgba(18,26,46,.08);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; background: var(--paper); }
+body { background: var(--paper); color: var(--ink); font: 400 16.5px/1.8 var(--f-cn); -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+img { display: block; max-width: 100%; height: auto; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--yel); outline-offset: 3px; border-radius: 6px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+.eyebrow { font: 700 12px/1 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--yel-ink); display: inline-flex; align-items: center; gap: 10px; }
+.eyebrow::before { content: ""; width: 18px; height: 3px; border-radius: 2px; background: var(--yel); }
+code { font-family: var(--f-mono); font-size: .86em; background: var(--white); border: 1px solid var(--line); padding: 1px 6px; border-radius: 5px; }
+
+/* ---------- 开场（深色） ---------- */
+.top { background: var(--navy); color: var(--on-navy); }
+.top-in { max-width: 1240px; margin: 0 auto; padding: 28px 32px 72px; }
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--on-navy-muted); }
+.crumbs img { height: 22px; width: auto; filter: invert(1) brightness(2); }
+.crumbs a { text-decoration: none; color: var(--on-navy-muted); }
+.crumbs a:hover { color: var(--on-navy); }
+.hero { margin-top: 56px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+.hero .eyebrow { color: var(--yel); }
+.hero h1 { margin-top: 18px; font: 800 clamp(44px, 6.4vw, 84px)/.95 var(--f-disp); letter-spacing: .005em; word-break: break-word; }
+.hero .sub { margin-top: 14px; font: 700 clamp(20px, 2.2vw, 26px)/1.4 var(--f-cn); }
+.hero .lede { margin-top: 18px; color: var(--on-navy-muted); font-size: 17px; max-width: 34em; }
+.actions { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 12px; font: 700 15px/1 var(--f-cn); text-decoration: none; border: 1px solid var(--navy-line); background: var(--navy-2); color: var(--on-navy); cursor: pointer; }
+.btn:hover { border-color: var(--yel); }
+.btn.yel { background: var(--yel); border-color: var(--yel); color: var(--ink); }
+.btn small { font: 500 12px/1 var(--f-mono); opacity: .75; }
+.btn[disabled] { opacity: .6; cursor: progress; }
+.pkg { margin-top: 10px; display: grid; gap: 10px; background: var(--white); border-radius: 12px; box-shadow: var(--shadow); padding: 16px 18px; }
+.pkg b { display: block; font: 700 16px/1.4 var(--f-mono); }
+.pkg span { font-size: 13.5px; color: var(--muted); }
+.pkg .sha { display: grid; gap: 4px; border-top: 1px dashed var(--line); padding-top: 10px; }
+.pkg .sha span { font: 700 11px/1 var(--f-mono); letter-spacing: .08em; }
+.pkg .sha code { font-size: 12px; word-break: break-all; background: var(--paper); border: 0; padding: 6px 8px; }
+.meta { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 8px; }
+.meta span { padding: 6px 10px; border-radius: 8px; background: var(--navy-2); border: 1px solid var(--navy-line); font-size: 13px; color: var(--on-navy-muted); }
+.meta b { color: var(--on-navy); font-weight: 500; }
+.chat { border-radius: 18px; background: var(--navy-2); border: 1px solid var(--navy-line); padding: 22px; display: grid; gap: 14px; box-shadow: 0 30px 60px rgba(0,0,0,.25); }
+.chat .bar { display: flex; gap: 6px; }
+.chat .bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--navy-line); }
+.msg { border-radius: 12px; padding: 12px 14px; font-size: 14.5px; line-height: 1.65; max-width: 92%; }
+.msg.you { justify-self: end; background: var(--yel); color: var(--ink); }
+.msg.ai { background: rgba(255,255,255,.06); color: var(--on-navy); }
+.msg.ai b { color: var(--yel); font-weight: 700; }
+.msg .who { display: block; font: 700 11px/1 var(--f-mono); letter-spacing: .1em; opacity: .7; margin-bottom: 6px; }
+@media (max-width: 920px) { .hero { grid-template-columns: minmax(0, 1fr); gap: 36px; margin-top: 36px; } }
+@media (max-width: 640px) { .top-in { padding: 20px 16px 56px; } }
+
+/* ---------- 正文布局 ---------- */
+.doc { max-width: 1240px; margin: 0 auto; padding: 0 32px; display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 64px; }
+.toc { position: sticky; top: 24px; align-self: start; padding-top: 72px; }
+.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; border-left: 2px solid var(--line); }
+.toc a { display: block; padding: 6px 0 6px 16px; margin-left: -2px; border-left: 2px solid transparent; text-decoration: none; font-size: 14px; color: var(--muted); }
+.toc a:hover { color: var(--ink); }
+.toc a.on { color: var(--ink); font-weight: 700; border-left-color: var(--yel); }
+main { min-width: 0; max-width: 860px; padding-bottom: 96px; }
+main > section { padding-top: 72px; }
+.h2 { display: grid; gap: 12px; margin-bottom: 28px; }
+.h2 h2 { font: 900 clamp(26px, 3vw, 36px)/1.25 var(--f-cn); }
+.h2 p { color: var(--ink-2); font-size: 17px; }
+@media (max-width: 1000px) { .doc { grid-template-columns: minmax(0, 1fr); gap: 0; } .toc { display: none; } }
+@media (max-width: 640px) { .doc { padding: 0 16px; } }
+
+/* 痛点 */
+.fixes { display: grid; gap: 12px; }
+.fix { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1.25fr); gap: 16px; align-items: center; background: var(--white); border-radius: var(--r); box-shadow: var(--shadow); padding: 18px 22px; }
+.fix .was { color: var(--muted); font-size: 15px; }
+.fix .was b { display: block; color: var(--red); font-size: 12px; font-family: var(--f-mono); letter-spacing: .08em; margin-bottom: 2px; }
+.fix .arrow { color: var(--yel-ink); font: 800 22px/1 var(--f-disp); text-align: center; }
+.fix .now b { display: block; font-size: 16px; }
+.fix .now span { font-size: 14.5px; color: var(--ink-2); }
+@media (max-width: 640px) { .fix { grid-template-columns: minmax(0, 1fr); gap: 6px; } .fix .arrow { text-align: left; } }
+
+/* 功能 */
+.feats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.feat { background: var(--white); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
+.feat .pic { aspect-ratio: 16 / 9; background: var(--paper); overflow: hidden; }
+.feat .pic img { width: 100%; height: 100%; object-fit: cover; }
+.feat .pic.fit img { object-fit: contain; padding: 10px; }
+.feat .txt { padding: 20px 22px 22px; display: grid; gap: 8px; align-content: start; }
+.feat h3 { font: 900 18px/1.4 var(--f-cn); }
+.feat p { font-size: 14.5px; color: var(--ink-2); line-height: 1.7; }
+.feat .say { font-size: 13px; color: var(--muted); }
+.feat .say q { color: var(--ink); quotes: "「" "」"; }
+.pic.vo { background: var(--navy); display: grid; align-content: center; gap: 10px; padding: 18px; }
+.wave { display: flex; align-items: center; gap: 3px; height: 64px; }
+.wave i { flex: 1; background: var(--teal); border-radius: 2px; }
+.vo-row { display: grid; grid-template-columns: 1.1fr 1.3fr 1fr 1.6fr 1.2fr; font: 500 11px/1.2 var(--f-mono); color: var(--on-navy-muted); }
+.vo-row .hit { color: var(--yel); }
+.vo-row.ev span { justify-self: start; font: 700 10px/1 var(--f-cn); padding: 5px 7px; border-radius: 5px; background: var(--yel); color: var(--ink); }
+.pic.checks { background: var(--navy); display: grid; align-content: center; gap: 8px; padding: 18px 22px; font: 500 12.5px/1.4 var(--f-mono); color: var(--on-navy); }
+.pic.checks div { display: flex; justify-content: space-between; gap: 10px; border-bottom: 1px dashed var(--navy-line); padding-bottom: 7px; }
+.pic.checks div:last-child { border-bottom: 0; }
+.pic.checks b { color: #6FE0B8; font-weight: 700; white-space: nowrap; }
+.dirpick { position: relative; }
+.dirpick .stage { display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.dirpick .stage img { object-fit: contain; }
+.dirpick .zoom { position: absolute; right: 10px; top: 10px; font: 700 12px/1 var(--f-cn); padding: 7px 10px; border-radius: 8px; background: rgba(18,26,46,.8); color: #fff; pointer-events: none; }
+.dirpick .lab { display: none; }
+.dirpick .thumbs { position: absolute; left: 10px; bottom: 10px; display: flex; gap: 4px; padding: 4px; border-radius: 10px; background: rgba(18,26,46,.82); }
+.dirpick .thumbs button { border: 0; border-radius: 7px; padding: 6px 9px; background: none; color: rgba(255,255,255,.8); font: 700 12px/1 var(--f-cn); cursor: pointer; }
+.dirpick .thumbs button:hover { color: #fff; background: rgba(255,255,255,.12); }
+.dirpick .thumbs button[aria-selected="true"] { background: var(--yel); color: var(--ink); }
+.lb { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 16px; background: rgba(6,9,18,.92); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.lb[hidden] { display: none; }
+.lb figure { margin: 0; display: grid; gap: 12px; justify-items: center; max-width: 100%; }
+.lb img { display: block; max-width: min(92vw, 1600px); max-height: calc(100vh - 120px); width: auto; height: auto; border-radius: 10px; background: #fff; }
+.lb .bar2 { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; color: #fff; font-size: 15px; }
+.lb .bar2 .ctl { display: flex; gap: 8px; }
+.lb .x { background: rgba(255,255,255,.12); border: 0; color: #fff; padding: 9px 14px; border-radius: 10px; cursor: pointer; font-size: 14px; white-space: nowrap; }
+.lb .x:hover { background: rgba(255,255,255,.22); }
+@media (max-width: 720px) { .feats { grid-template-columns: minmax(0, 1fr); } }
+
+/* 流程 */
+.flow { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 0; background: var(--white); border-radius: var(--r); box-shadow: var(--shadow); }
+.flow li { counter-increment: s; display: grid; grid-template-columns: 48px 9em minmax(0, 1fr) auto; gap: 14px; align-items: baseline; padding: 14px 22px; border-bottom: 1px solid var(--line); font-size: 15px; }
+.flow li:last-child { border-bottom: 0; }
+.flow li::before { content: counter(s, decimal-leading-zero); font: 800 22px/1 var(--f-disp); color: var(--yel-ink); }
+.flow b { font-size: 16px; }
+.flow span { color: var(--ink-2); }
+.flow em { font-style: normal; font: 700 11px/1 var(--f-mono); padding: 5px 8px; border-radius: 6px; background: var(--paper); color: var(--ink-2); white-space: nowrap; }
+.flow .you { background: #FFF3CF; color: var(--yel-ink); }
+@media (max-width: 720px) { .flow li { grid-template-columns: 40px minmax(0, 1fr); } .flow li span, .flow li em { grid-column: 2; } .flow li em { justify-self: start; } }
+
+/* 表格 */
+.tbl-box { overflow-x: auto; background: var(--white); border-radius: var(--r); box-shadow: var(--shadow); }
+table { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 560px; }
+th, td { text-align: left; vertical-align: top; padding: 13px 18px; border-bottom: 1px solid var(--line); }
+th { font: 700 12px/1.4 var(--f-mono); letter-spacing: .08em; color: var(--muted); background: #FAFBFC; }
+tr:last-child td { border-bottom: 0; }
+td:first-child { font-weight: 700; white-space: nowrap; }
+td .opt { display: inline-block; margin-left: 6px; font: 700 10.5px/1 var(--f-mono); padding: 3px 6px; border-radius: 4px; background: var(--paper); color: var(--muted); vertical-align: 2px; }
+td .req { display: inline-block; margin-left: 6px; font: 700 10.5px/1 var(--f-mono); padding: 3px 6px; border-radius: 4px; background: #FFF3CF; color: var(--yel-ink); vertical-align: 2px; }
+
+/* 步骤与代码块 */
+.install { list-style: none; margin: 0; padding: 0; counter-reset: i; display: grid; gap: 18px; }
+.install > li { counter-increment: i; display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 16px; }
+.install > li::before { content: counter(i); width: 36px; height: 36px; border-radius: 50%; background: var(--navy); color: var(--yel); display: grid; place-items: center; font: 800 18px/1 var(--f-disp); }
+.install h3 { font: 700 17px/1.5 var(--f-cn); margin: 4px 0 6px; }
+.install p { color: var(--ink-2); font-size: 15px; }
+.code { margin-top: 10px; position: relative; background: var(--navy); color: var(--on-navy); border-radius: 12px; padding: 14px 92px 14px 18px; font: 500 13.5px/1.7 var(--f-mono); white-space: pre-wrap; word-break: break-all; }
+.code .c { color: var(--on-navy-muted); }
+.copy { position: absolute; top: 9px; right: 9px; background: rgba(255,255,255,.1); border: 0; color: var(--on-navy); font: 700 12px/1 var(--f-cn); padding: 8px 11px; border-radius: 8px; cursor: pointer; }
+.copy:hover { background: rgba(255,255,255,.2); }
+.prompts { display: grid; gap: 10px; }
+.prompt { position: relative; background: var(--white); border-radius: 12px; box-shadow: var(--shadow); padding: 14px 92px 14px 18px; font-size: 15px; }
+.prompt .copy { background: var(--paper); color: var(--ink); }
+.prompt .copy:hover { background: var(--line); }
+.prompt small { display: block; color: var(--muted); font-size: 13px; margin-top: 2px; }
+.callout { margin-top: 18px; padding: 16px 18px; border-radius: 12px; background: #FFF3CF; color: #5C3D00; font-size: 15px; }
+.callout b { color: #3D2900; }
+.sub-h { margin: 34px 0 12px; font: 900 19px/1.4 var(--f-cn); }
+
+/* 安装方式 */
+.methods { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
+.m { position: relative; background: var(--white); border-radius: var(--r); box-shadow: var(--shadow); padding: 22px; display: grid; gap: 10px; min-width: 0; }
+.m.rec { outline: 2px solid var(--yel); }
+.m .badge { position: absolute; top: -11px; left: 18px; font: 700 12px/1 var(--f-cn); padding: 6px 9px; border-radius: 6px; background: var(--yel); color: var(--ink); }
+.m h3 { font: 900 17px/1.4 var(--f-cn); }
+.m p { font-size: 14px; color: var(--ink-2); }
+.m .code { margin-top: 0; font-size: 12.5px; padding-right: 64px; }
+.m .prompt { box-shadow: none; background: var(--paper); font-size: 14px; padding: 12px 64px 12px 14px; }
+.m a { color: var(--yel-ink); font-weight: 700; }
+.plain { color: var(--ink-2); font-size: 15px; }
+.term { margin-top: 10px; background: #0B111F; color: #C9D1E3; border-radius: 12px; padding: 16px 18px; font: 500 13px/1.75 var(--f-mono); white-space: pre-wrap; }
+.term .ok { color: #6FE0B8; } .term .no { color: #FF8A7A; }
+
+
+.diffs { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.diffs li { background: var(--white); border-radius: 12px; box-shadow: var(--shadow); padding: 14px 18px; font-size: 15px; color: var(--ink-2); }
+.diffs li b { display: block; color: var(--ink); margin-bottom: 2px; }
+.m p b { color: var(--ink); }
+
+/* 角色库 */
+.ray { display: grid; gap: 18px; }
+.ray .sheet { margin: 0; padding: 16px; border-radius: var(--r); background: #F4E8D2; box-shadow: var(--shadow); }
+.poses { display: flex; flex-wrap: wrap; gap: 6px; }
+.poses code { background: var(--white); }
+
+/* 文件树 */
+.tree { background: var(--white); border-radius: var(--r); box-shadow: var(--shadow); padding: 20px 22px; font: 500 13.5px/1.85 var(--f-mono); overflow-x: auto; white-space: pre; color: var(--ink); }
+.tree .c { color: var(--muted); }
+
+/* FAQ */
+.faq { display: grid; gap: 10px; }
+.faq details { background: var(--white); border-radius: 12px; box-shadow: var(--shadow); padding: 0 20px; }
+.faq summary { cursor: pointer; padding: 16px 0; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font: 700 20px/1 var(--f-mono); color: var(--yel-ink); }
+.faq details[open] summary::after { content: "–"; }
+.faq details p { padding: 0 0 18px; color: var(--ink-2); font-size: 15px; }
+
+/* 版本 */
+.versions { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-left: 2px solid var(--line); }
+.versions li { position: relative; padding: 0 0 22px 24px; }
+.versions li::before { content: ""; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--white); border: 2px solid var(--yel); }
+.versions li:first-child::before { background: var(--yel); }
+.versions b { font: 700 14px/1.4 var(--f-mono); }
+.versions span { color: var(--muted); font-size: 13px; margin-left: 8px; }
+.versions p { color: var(--ink-2); font-size: 15px; margin-top: 4px; }
+
+/* 相关 */
+.related { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.rel { background: var(--white); border-radius: var(--r); box-shadow: var(--shadow); padding: 24px; display: grid; gap: 10px; align-content: start; }
+.rel .tag { font: 700 11px/1 var(--f-mono); letter-spacing: .1em; color: var(--muted); }
+.rel h3 { font: 800 26px/1.05 var(--f-disp); }
+.rel p { font-size: 14.5px; color: var(--ink-2); }
+.rel ul { margin: 0; padding-left: 1.1em; font-size: 14.5px; color: var(--ink-2); display: grid; gap: 4px; }
+.rel .code { margin-top: 4px; font-size: 12.5px; padding-right: 76px; }
+.rel a.more { font-weight: 700; text-decoration: none; color: var(--yel-ink); }
+.rel a.more:hover { text-decoration: underline; }
+@media (max-width: 720px) { .related { grid-template-columns: minmax(0, 1fr); } }
+footer { border-top: 1px solid var(--line); padding: 28px 32px 40px; color: var(--muted); font-size: 14px; text-align: center; }
+</style>
+
+<div class="top">
+  <div class="top-in">
+    <div class="crumbs">
+      <img src="media/logo_ink.png" alt="CRST" width="480" height="156">
+      <a href="../">← 返回「CRST 短片制作实录」</a>
+    </div>
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Agent Skill · Claude Code ＋ Codex · v1.5</div>
+        <h1>crst-safety-video</h1>
+        <p class="sub">CRST 用电安全科普视频制作流程</p>
+        <p class="lede">装上它，在 Claude Code 或 Codex 里说一句「做一支用电安全科普视频」，AI 就会按两支成片总结出来的流程做：选题、脚本、配音、动画、横竖两版成片、字幕和发布文案。每个需要拍板的地方都会停下来问你。</p>
+        <div class="actions">
+          <a class="btn yel" href="#install">安装步骤</a>
+          <a class="btn" href="https://github.com/sundyme/crst-safety-video" target="_blank" rel="noopener">GitHub 仓库 ↗</a>
+        </div>
+        <div class="meta"><span><b>适用</b> Claude Code · Codex</span><span><b>系统</b> macOS</span><span><b>语言</b> 中文流程 · 英文成片</span><span><b>生图</b> Codex / API 可选</span><span><b>范围</b> 公司内部使用</span></div>
+      </div>
+      <div class="chat" aria-label="使用示例对话">
+        <div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="msg you"><span class="who">你</span>用 crst-safety-video，做一支面向美国家庭的用电安全科普视频，先给我 3 个选题。</div>
+        <div class="msg ai"><span class="who">CLAUDE CODE / CODEX</span>新工程已建好，角色素材库也拷进来了。结合 10 月防火月和入冬取暖季，给你三个选题：<br><b>1</b> 防雷插排和普通插排的区别<br><b>2</b> 电暖器为什么不能插插排<br><b>3</b> 一个插座到底能带多少瓦<br>选一个，我写脚本，再出三个风格方向给你挑。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="doc">
+  <nav class="toc" aria-label="目录">
+    <ol>
+      <li><a href="#why">解决什么问题</a></li>
+      <li><a href="#features">功能</a></li>
+      <li><a href="#flow">工作流程</a></li>
+      <li><a href="#require">环境要求</a></li>
+      <li><a href="#install">安装</a></li>
+      <li><a href="#backends">生图后端</a></li>
+      <li><a href="#use">使用</a></li>
+      <li><a href="#ray">Ray 角色库</a></li>
+      <li><a href="#inside">包里有什么</a></li>
+      <li><a href="#faq">常见问题</a></li>
+      <li><a href="#versions">版本记录</a></li>
+      <li><a href="#related">相关 Skill</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <section id="why">
+      <div class="h2"><div class="eyebrow">解决什么问题</div><h2>第一支片踩过的坑，都变成了规则</h2><p>第一支片用了一整天、迭代六版，大部分时间花在下面这些返工上。现在它们都写进了 skill，第二支片 38 分钟就出了第一版。</p></div>
+      <div class="fixes">
+        <div class="fix"><div class="was"><b>以前</b>AI 画的插头脚数不对、接地孔错位，电线从奇怪的地方伸出来</div><div class="arrow" aria-hidden="true">→</div><div class="now"><b>PlugKit 接线零件库</b><span>按美国 NEMA 标准用代码画，每一帧自动检查悬空、穿插、插错</span></div></div>
+        <div class="fix"><div class="was"><b>以前</b>改一句台词，字幕、画面、音效都要重新对时间</div><div class="arrow" aria-hidden="true">→</div><div class="now"><b>配音驱动的时间轴</b><span>逐句合成，画面事件绑在词上，改台词或换声音自动重新对齐</span></div></div>
+        <div class="fix"><div class="was"><b>以前</b>角色只有几张静态图，像素材库里找来的</div><div class="arrow" aria-hidden="true">→</div><div class="now"><b>Ray 2D 角色库</b><span>10 个姿势，带口型和眨眼，代码加上预备动作和回弹；缺的动作随时补</span></div></div>
+        <div class="fix"><div class="was"><b>以前</b>每支片从零搭工程，同样的错误再犯一次</div><div class="arrow" aria-hidden="true">→</div><div class="now"><b>工程模板＋踩坑清单</b><span>一条命令建好工程；被纠正过的每个问题都写在 lessons 里，开工前先看</span></div></div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="h2"><div class="eyebrow">功能</div><h2>它能帮你做这些</h2></div>
+      <div class="feats">
+        <article class="feat">
+          <div class="pic dirpick" data-lb="风格三方向（第一支片）">
+            <button class="stage" type="button" aria-label="放大查看当前方向"><img src="media/f1_dir_C_l.jpg" alt="风格方向 C：警示海报，已选定" width="1600" height="900"><span class="lab"></span></button>
+            <span class="zoom">⤢ 点开大图</span>
+            <div class="thumbs" role="tablist" aria-label="切换风格方向">
+              <button type="button" role="tab" aria-selected="true" data-full="media/f1_dir_C_l.jpg" data-label="C 警示海报 ✓ 已选定" data-alt="风格方向 C：警示海报，已选定" data-pick>C 警示海报 ✓</button>
+              <button type="button" role="tab" aria-selected="false" data-full="media/f1_dir_A_l.jpg" data-label="A 夜色扁平" data-alt="风格方向 A：夜色扁平">A 夜色扁平</button>
+              <button type="button" role="tab" aria-selected="false" data-full="media/f1_dir_B_l.jpg" data-label="B 白板手绘" data-alt="风格方向 B：白板手绘">B 白板手绘</button>
+            </div>
+          </div>
+          <div class="txt"><h3>选题、脚本、三选一定风格</h3><p>给 3 个选题和发布时机；写约 290 词英文脚本，每个数字注明出处。风格在同一帧上出 3 个方向，你挑一个，写进风格规范。</p><p class="say">试试说：<q>给我 3 个选题</q></p></div>
+        </article>
+        <article class="feat">
+          <div class="pic"><img src="media/plug_closeup.jpg" alt="代码画的插排和插头特写" width="700" height="520"></div>
+          <div class="txt"><h3>插头电线永远画对</h3><p>插头、插座、插排、转接头都是 NEMA 标准零件。场景只声明「哪个插头插进哪个孔」，出片前跑 <code>--check</code>，横竖两版都必须通过。外观可换皮肤，适配任何画风。</p><p class="say">试试说：<q>画面里要有电暖器插在插排上</q></p></div>
+        </article>
+        <article class="feat">
+          <div class="pic vo" aria-hidden="true">
+            <div class="wave" id="wave"></div>
+            <div class="vo-row"><span>CRST</span><span class="hit">heavy-duty</span><span>strips</span><span class="hit">metal housing</span><span class="hit">2,800 J</span></div>
+            <div class="vo-row ev"><span>Logo</span><span>产品弹入</span><span></span><span>卖点 1</span><span>卖点 2</span></div>
+          </div>
+          <div class="txt"><h3>配音和时间轴</h3><p>MiniMax 逐句合成（默认 Deep_Voice_Man），可先用同一句试 3 到 5 个声音。画面事件写成 <code>at('c1', 'metal')</code>，说到 metal 时触发。配乐和音效用代码合成，口播时自动压低。</p><p class="say">试试说：<q>换个更温和的声音试试</q></p></div>
+        </article>
+        <article class="feat">
+          <div class="pic fit" style="background:#F4E8D2"><img src="media/ray_2d_sheet.jpg" alt="Ray 角色库 10 个姿势" width="1200" height="723"></div>
+          <div class="txt"><h3>Ray 会说会动</h3><p>吉祥物 Ray 有 10 个姿势，按台词换动作，口型跟配音开合、会眨眼。需要新动作时，用生图后端从母版改图生成，处理后合并进库，旧姿势不受影响。</p><p class="say">试试说：<q>Ray 需要一个蹲下检查插座的动作</q></p></div>
+        </article>
+        <article class="feat">
+          <div class="pic checks" aria-label="出片检查清单示意">
+            <div><span>PlugKit 接线校验 · 横屏</span><b>✓ 通过</b></div>
+            <div><span>PlugKit 接线校验 · 竖屏</span><b>✓ 通过</b></div>
+            <div><span>结尾二维码 → crsttech.com</span><b>✓ 可扫</b></div>
+            <div><span>竖屏底部平台 UI 区</span><b>✓ 留空</b></div>
+            <div><span>独立 agent 审片</span><b>P1 · P2 · P3</b></div>
+          </div>
+          <div class="txt"><h3>出片前自动验收</h3><p>机器检查接线、二维码和竖屏安全区；再派一个没参与制作的 agent 只看成片挑问题，按严重程度修完再交。</p><p class="say">试试说：<q>出片，然后审一遍</q></p></div>
+        </article>
+        <article class="feat">
+          <div class="pic checks" aria-label="交付清单示意">
+            <div><span>片名_16x9_v3.mp4</span><b>1080p</b></div>
+            <div><span>片名_9x16_v3.mp4</span><b>1080p</b></div>
+            <div><span>片名_en.srt</span><b>字幕</b></div>
+            <div><span>发布文案.md</span><b>章节时间</b></div>
+            <div><span>DEVLOG.md · docs/snapshots/</span><b>git 存档</b></div>
+          </div>
+          <div class="txt"><h3>一次交付齐全</h3><p>横竖两版成片、英文字幕、YouTube 章节时间、各平台发布文案。每个版本写开发日志、存效果截图，提醒你提交存档。</p><p class="say">试试说：<q>可以了，帮我出发布文案</q></p></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="flow">
+      <div class="h2"><div class="eyebrow">工作流程</div><h2>8 步，标黄的地方需要你拍板</h2></div>
+      <ol class="flow">
+        <li><b>选题与脚本</b><span>3 个选题，约 290 词脚本，数字有出处</span><em class="you">你选题</em></li>
+        <li><b>定风格</b><span>同一帧出 3 个方向，写风格规范</span><em class="you">你选风格</em></li>
+        <li><b>配音与时间轴</b><span>逐句合成，生成词级时间轴</span><em class="you">你选声音</em></li>
+        <li><b>素材</b><span>PlugKit 画接线；Ray 角色库；生图后端出背景道具；产品用真图</span><em>自动</em></li>
+        <li><b>画面</b><span>一套场景代码，参数切换横竖版式</span><em>自动</em></li>
+        <li><b>音效与配乐</b><span>导出音效清单，合成、闪避、响度统一</span><em>自动</em></li>
+        <li><b>出片与验收</b><span>接线校验、二维码解码、独立审片</span><em class="you">你提意见</em></li>
+        <li><b>交付</b><span>成片、字幕、章节、发布文案、开发日志</span><em class="you">你确认提交</em></li>
+      </ol>
+    </section>
+
+    <section id="require">
+      <div class="h2"><div class="eyebrow">环境要求</div><h2>装之前先准备这些</h2><p>只在 macOS 上验证过。不用一项项对照：装完运行环境检查，它会告诉你缺什么、怎么补。</p></div>
+      <div class="tbl-box">
+        <table>
+          <thead><tr><th>需要</th><th>用途</th><th>怎么准备</th></tr></thead>
+          <tbody>
+            <tr><td>Claude Code 或 Codex<span class="req">二选一</span></td><td>运行这个 skill</td><td>Claude 桌面版的 Code 页或 <code>claude</code> 命令；Codex 应用或 <code>codex</code> 命令。两个都装也行</td></tr>
+            <tr><td>GitHub 权限<span class="req">必需</span></td><td>下载和更新 skill</td><td>请管理员把你的 GitHub 账号加为仓库协作者；本机 <code>gh auth login</code></td></tr>
+            <tr><td>uv、ffmpeg<span class="req">必需</span></td><td>运行脚本、合成音视频</td><td><code>brew install uv ffmpeg</code></td></tr>
+            <tr><td>Playwright Chromium<span class="req">必需</span></td><td>逐帧渲染画面</td><td><code>uv run --with playwright playwright install chromium</code></td></tr>
+            <tr><td>MiniMax API key<span class="req">配音需要</span></td><td>英文配音</td><td>填进配置文件</td></tr>
+            <tr><td>一个生图后端<span class="req">生图需要</span></td><td>角色动作、背景、道具</td><td>本机 Codex 或任一生图 API，见下方「生图后端」</td></tr>
+            <tr><td>Blender＋CRST Pro 模型<span class="opt">可选</span></td><td>渲染真实产品图</td><td>没有就用官方产品白底图，脚本会抠图加描边</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="install">
+      <div class="h2"><div class="eyebrow">安装</div><h2>三种装法，Claude Code 和 Codex 都适用</h2><p>代码放在 GitHub 私有仓库 <a href="https://github.com/sundyme/crst-safety-video" target="_blank" rel="noopener"><code>sundyme/crst-safety-video</code></a>。第一次装之前，先请管理员把你的 GitHub 账号加为协作者。</p></div>
+      <div class="methods">
+        <div class="m rec">
+          <span class="badge">推荐</span>
+          <h3>让 Claude Code 或 Codex 帮你装</h3>
+          <p>在 Claude Code 或 Codex 里粘贴这句话。它会克隆仓库、装给本机的 Claude Code 和 Codex、创建配置文件、检查环境，缺什么会告诉你怎么补。</p>
+          <div class="prompt" data-copy="帮我安装这个 skill：https://github.com/sundyme/crst-safety-video 。先克隆到本机，再运行仓库里的 scripts/install.sh（它会装给本机的 Claude Code 和 Codex），最后告诉我 doctor 检查结果里还缺什么、怎么补。">帮我安装这个 skill：https://github.com/sundyme/crst-safety-video 。先克隆到本机，再运行仓库里的 scripts/install.sh（它会装给本机的 Claude Code 和 Codex），最后告诉我 doctor 检查结果里还缺什么、怎么补。</div>
+        </div>
+        <div class="m">
+          <h3>两行命令</h3>
+          <p>在终端里执行。第二行会检测本机装了 Claude Code 还是 Codex：仓库只保留一份，另一个工具的 skills 目录里放一个链接，更新一次两边都生效。</p>
+          <p><b>用 Claude Code（或两个都用）</b></p>
+          <div class="code" data-copy="gh repo clone sundyme/crst-safety-video ~/.claude/skills/crst-safety-video
+zsh ~/.claude/skills/crst-safety-video/scripts/install.sh">gh repo clone sundyme/crst-safety-video ~/.claude/skills/crst-safety-video
+zsh ~/.claude/skills/crst-safety-video/scripts/install.sh</div>
+          <p><b>只用 Codex</b></p>
+          <div class="code" data-copy="gh repo clone sundyme/crst-safety-video ~/.codex/skills/crst-safety-video
+zsh ~/.codex/skills/crst-safety-video/scripts/install.sh">gh repo clone sundyme/crst-safety-video ~/.codex/skills/crst-safety-video
+zsh ~/.codex/skills/crst-safety-video/scripts/install.sh</div>
+          <p>想手动指定：在第二行末尾加 <code>--claude</code>、<code>--codex</code> 或 <code>--both</code>。</p>
+        </div>
+        <div class="m">
+          <h3>下载 zip</h3>
+          <p>不想用 git 时，在仓库的 <a href="https://github.com/sundyme/crst-safety-video/releases/latest" target="_blank" rel="noopener">Releases 页面</a> 下载 <code>crst-safety-video-v1.5.zip</code>（16 MB），解压到 <code>~/.claude/skills/</code>（Claude Code）或 <code>~/.codex/skills/</code>（Codex），再创建配置文件、运行环境检查。以 Codex 为例：</p>
+          <div class="code" data-copy="unzip -o ~/Downloads/crst-safety-video-v1.5.zip -d ~/.codex/skills/
+mkdir -p ~/.config/crst-safety-video && cp ~/.codex/skills/crst-safety-video/config.example.env ~/.config/crst-safety-video/config.env
+python3 ~/.codex/skills/crst-safety-video/scripts/doctor.py">unzip -o ~/Downloads/crst-safety-video-v1.5.zip -d ~/.codex/skills/
+mkdir -p ~/.config/crst-safety-video && cp ~/.codex/skills/crst-safety-video/config.example.env ~/.config/crst-safety-video/config.env
+python3 ~/.codex/skills/crst-safety-video/scripts/doctor.py</div>
+        </div>
+      </div>
+
+      <h3 class="sub-h">装好之后：填配置</h3>
+      <p class="plain">所有 key 和选项都在 <code>~/.config/crst-safety-video/config.env</code>。这个文件只在你的电脑上，不在仓库里，脚本也不会打印 key。用文本编辑器打开：</p>
+      <div class="code" data-copy="open -e ~/.config/crst-safety-video/config.env">open -e ~/.config/crst-safety-video/config.env</div>
+      <div class="code"><span class="c"># 配音（必填）</span>
+MINIMAX_API_KEY=你的key
+<span class="c"># 生图后端：留空自动选；本机装了 Codex 通常什么都不用填</span>
+IMAGEGEN_BACKEND=</div>
+
+      <h3 class="sub-h">检查环境</h3>
+      <p class="plain">随时可以运行，逐项打勾，缺的会给出补齐命令（只用 Codex 的把路径里的 <code>.claude</code> 换成 <code>.codex</code>）：</p>
+      <div class="code" data-copy="python3 ~/.claude/skills/crst-safety-video/scripts/doctor.py">python3 ~/.claude/skills/crst-safety-video/scripts/doctor.py</div>
+      <div class="term" aria-label="环境检查输出示例"><span class="ok">✓</span> Claude Code：已安装 ~/.claude/skills/crst-safety-video
+<span class="ok">✓</span> Codex：已安装 ~/.codex/skills/crst-safety-video → ~/.claude/skills/crst-safety-video
+<span class="ok">✓</span> uv：/opt/homebrew/bin/uv
+<span class="ok">✓</span> ffmpeg：/opt/homebrew/bin/ffmpeg
+<span class="no">✗</span> Playwright Chromium：没找到
+    → uv run --with playwright playwright install chromium
+<span class="ok">✓</span> MiniMax 配音 key：已设置
+生图后端：<span class="ok">✓</span> codex　· openai　· gemini　· antigravity　· command
+当前会用：codex</div>
+
+      <h3 class="sub-h">以后更新</h3>
+      <p class="plain">用前两种方式装的，再运行一次安装脚本就会拉取最新版（Claude Code 和 Codex 一起更新）：</p>
+      <div class="code" data-copy="zsh ~/.claude/skills/crst-safety-video/scripts/install.sh">zsh ~/.claude/skills/crst-safety-video/scripts/install.sh</div>
+      <div class="callout"><b>装好后重新打开 Claude Code，或新开一个 Codex 会话。</b>提到用电安全视频、插排科普、CRST 视频时会自动用上这个 skill；也可以直接说「用 crst-safety-video」。</div>
+
+      <h3 class="sub-h">在 Codex 里用的区别</h3>
+      <ul class="diffs">
+        <li><b>生图</b>Codex 自带图像工具，可以直接用，不需要另外配置生图后端。</li>
+        <li><b>联网</b>Codex 默认沙盒不联网，而配音、首次下载依赖、生图 API 都要联网。遇到网络错误时批准那条命令，或在 <code>~/.codex/config.toml</code> 里打开：
+          <div class="code" data-copy="[sandbox_workspace_write]
+network_access = true">[sandbox_workspace_write]
+network_access = true</div></li>
+        <li><b>审片</b>如果不能开子 agent，Codex 会请你新开一个会话，把审片提示词和成片静帧贴进去。</li>
+      </ul>
+    </section>
+
+    <section id="backends">
+      <div class="h2"><div class="eyebrow">生图后端</div><h2>生图工具不写死，手上有哪个用哪个</h2><p>所有生图都走同一个入口 <code>tools/imagegen.py</code>。在配置文件里选后端，流程和提示词都不用改。留空时按表格顺序自动选第一个可用的。</p></div>
+      <div class="tbl-box">
+        <table>
+          <thead><tr><th>后端</th><th>需要</th><th>适合</th></tr></thead>
+          <tbody>
+            <tr><td><code>codex</code></td><td>本机 Codex CLI：ChatGPT 桌面版自带，或 <code>brew install codex</code></td><td>默认首选，用 ChatGPT 账号额度，不需要 key。一批图在同一会话里生成，系列图更一致</td></tr>
+            <tr><td><code>openai</code></td><td><code>OPENAI_API_KEY</code>；可选 <code>OPENAI_BASE_URL</code>、<code>OPENAI_IMAGE_MODEL</code></td><td>OpenAI 或任何兼容网关的图像接口；带参考图时自动走改图接口</td></tr>
+            <tr><td><code>gemini</code></td><td><code>GEMINI_API_KEY</code>；可选 <code>GEMINI_IMAGE_MODEL</code></td><td>Google Gemini 图像模型，改图时人物一致性较好</td></tr>
+            <tr><td><code>antigravity</code></td><td>本机 Antigravity 应用开着</td><td>Google AI Pro 额度，单张 2 到 4 分钟</td></tr>
+            <tr><td><code>command</code></td><td><code>IMAGEGEN_COMMAND</code> 命令模板</td><td>接入公司内部或其他任何生图工具</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 class="sub-h">换后端</h3>
+      <p class="plain">长期换：改配置文件里的 <code>IMAGEGEN_BACKEND</code>。临时换：让 Claude 「这批图用 gemini 生成」，或手动加 <code>--backend</code>：</p>
+      <div class="code" data-copy="python3 tools/imagegen.py one out.png &quot;a cozy living room, flat vector&quot; --backend openai"><span class="c"># 在项目目录里；看当前可用后端用 doctor</span>
+python3 tools/imagegen.py doctor
+python3 tools/imagegen.py one out.png "a cozy living room, flat vector" --backend openai</div>
+      <h3 class="sub-h">接入自定义工具</h3>
+      <p class="plain">任何能从命令行出图的工具都能接。脚本会把提示词写进临时文件，替换占位符 <code>{out}</code> <code>{prompt_file}</code> <code>{refs}</code> <code>{size}</code> 后执行：</p>
+      <div class="code">IMAGEGEN_BACKEND=command
+IMAGEGEN_COMMAND=mytool gen --out {out} --prompt-file {prompt_file} {refs}</div>
+      <div class="callout"><b>同一组系列图用同一个后端做完。</b>例如 Ray 某个姿势的闭嘴、张嘴、眨眼三张，换后端画风可能有差别，补丁会对不上。</div>
+    </section>
+
+    <section id="use">
+      <div class="h2"><div class="eyebrow">使用</div><h2>在 Claude Code 里打开一个空文件夹，然后直接说</h2><p>Claude 会用 <code>scripts/new_project.sh</code> 建好工程：复制模板、拷入角色素材、git 初始化并做初始提交。之后每一步都会停下来让你选。</p></div>
+      <div class="prompts">
+        <div class="prompt" data-copy="用 crst-safety-video，做一支面向美国家庭的用电安全科普视频，先给我 3 个选题。">用 crst-safety-video，做一支面向美国家庭的用电安全科普视频，先给我 3 个选题。<small>从零开始一支新片</small></div>
+        <div class="prompt" data-copy="选题 2，用 C 风格做一版，横屏和竖屏都要。">选题 2，用 C 风格做一版，横屏和竖屏都要。<small>选定选题和风格后开做</small></div>
+        <div class="prompt" data-copy="Ray 需要一个手拿插排介绍的动作，补进角色库。">Ray 需要一个手拿插排介绍的动作，补进角色库。<small>补新姿势，片子验收后收回库里</small></div>
+        <div class="prompt" data-copy="出片，派一个独立 agent 审一遍，按问题严重程度修完再给我。">出片，派一个独立 agent 审一遍，按问题严重程度修完再给我。<small>出片和验收</small></div>
+      </div>
+      <h3 class="sub-h">常用命令</h3>
+      <p style="color:var(--ink-2);font-size:15px">Claude 会自己跑这些命令。想手动检查时，在项目的 <code>代码工程</code> 目录里执行：</p>
+      <div class="code" data-copy="uv run --with playwright python render_film.py --o h --check 0.1"><span class="c"># 接线校验（横竖两版都要通过）</span>
+uv run --with playwright python render_film.py --o h --check 0.1</div>
+      <div class="code" data-copy="uv run --with playwright python render_film.py --o h --stills 3,20,45 --out ../渲染/静帧_h"><span class="c"># 出几张静帧看效果</span>
+uv run --with playwright python render_film.py --o h --stills 3,20,45 --out ../渲染/静帧_h</div>
+      <div class="code" data-copy="uv run --with playwright python render_film.py --o h --out ../成片/片名_16x9_v1.mp4 --audio ../音频/mix.wav"><span class="c"># 渲染成片（竖屏把 h 换成 v）</span>
+uv run --with playwright python render_film.py --o h --out ../成片/片名_16x9_v1.mp4 --audio ../音频/mix.wav</div>
+    </section>
+
+    <section id="ray">
+      <div class="h2"><div class="eyebrow">Ray 角色库</div><h2>10 个姿势，越用越全</h2><p>新工程自带全部成品帧和动画模块。场景里写 <code>act(时间, '姿势名')</code>，Ray 就会换动作，并自动加上预备、回弹、呼吸、口型和眨眼。</p></div>
+      <div class="ray">
+        <figure class="sheet"><img src="media/ray_2d_sheet.jpg" alt="Ray 的 10 个姿势总览" width="1200" height="723"></figure>
+        <div class="poses"><code>idle</code><code>up</code><code>point</code><code>explain</code><code>stop</code><code>thumbsup</code><code>nope</code><code>shocked</code><code>wave_a</code><code>wave_b</code></div>
+      </div>
+      <h3 class="sub-h">补一个新姿势</h3>
+      <ol class="install">
+        <li><div><h3>用母版改图</h3><p>生图后端以 <code>base.png</code> 为母版，只改胳膊、手和表情，生成闭嘴帧；再分别只改嘴、只改眼睛，生成张嘴帧和眨眼帧。所有新动作都从同一张母版改，避免一代代走样。</p></div></li>
+        <li><div><h3>后期处理</h3><p><code>tools/process_ray2d.py</code> 抠绿幕、按帽檐角度印上真 logo、切出口型和眨眼补丁。结果合并进位置表，旧姿势不受影响。</p></div></li>
+        <li><div><h3>收回库里</h3><p>片子验收后运行 <code>scripts/ray2d_library.py push &lt;项目&gt;</code>，新姿势进入角色库，总览图自动重画。下一支片就能直接用。</p></div></li>
+      </ol>
+    </section>
+
+    <section id="inside">
+      <div class="h2"><div class="eyebrow">包里有什么</div><h2>目录结构</h2></div>
+<div class="tree">crst-safety-video/
+├── SKILL.md              <span class="c"># 给 Claude 的流程说明（8 步）</span>
+├── README.md             <span class="c"># 给人看的说明：功能、环境、安装、使用</span>
+├── CHANGELOG.md          <span class="c"># 版本记录</span>
+├── config.example.env    <span class="c"># 配置模板（key、生图后端）</span>
+├── references/           <span class="c"># 接线库、配音、生图、产品与品牌、验收、踩坑清单、范例</span>
+├── library/ray2d/        <span class="c"># Ray 角色库：母版、提示词、姿势总览、使用说明</span>
+├── scripts/
+│   ├── install.sh        <span class="c"># 安装 / 更新（Claude Code、Codex）</span>
+│   ├── doctor.py         <span class="c"># 环境检查</span>
+│   ├── new_project.sh    <span class="c"># 新建工程</span>
+│   ├── ray2d_library.py  <span class="c"># 角色库 ⇄ 项目同步（pull / push / sheet）</span>
+│   └── package.sh        <span class="c"># 打安装包</span>
+└── template/             <span class="c"># 工程模板</span>
+    ├── 代码工程/          <span class="c"># 画面运行时、PlugKit、ray2d.js、渲染脚本、字体、角色成品帧</span>
+    ├── 音频/              <span class="c"># 配音、口型、配乐与混音脚本</span>
+    └── tools/            <span class="c"># imagegen.py 生图入口、抠图、logo 替换、产品渲染、字幕</span></div>
+      <p style="margin-top:14px;color:var(--muted);font-size:14px"><code>library/ray2d/source/</code> 只带母版和参考图；各姿势的原始生成帧（约 44 MB）只在 GitHub 仓库里，zip 包不带；只有重新切口型补丁时才需要。</p>
+    </section>
+
+    <section id="faq">
+      <div class="h2"><div class="eyebrow">常见问题</div><h2>常见问题</h2></div>
+      <div class="faq">
+        <details><summary>我用的是 Codex，不是 Claude Code，能用吗？</summary><p>能。skill 用的是两边通用的 SKILL.md 格式，已在 Codex 0.160 上实测能加载。安装方式见「安装」里的「只用 Codex」，在 Codex 里用的区别见「在 Codex 里用的区别」。</p></details>
+        <details><summary>没有 ChatGPT 账号能生图吗？</summary><p>能。在配置文件里填一个 OpenAI 兼容接口或 Gemini 的 API key，或者用 <code>command</code> 后端接公司内部的生图工具。见「生图后端」。</p></details>
+        <details><summary>没有 MiniMax key 能用吗？</summary><p>选题、脚本、风格方向、画面静帧都能做，只有生成配音需要 key。可以先把画面做出来，拿到 key 后再配音，画面会按新的时间轴自动对齐。</p></details>
+        <details><summary>可以换画风吗？</summary><p>可以，而且每支片都会换。skill 固定的是流程，不是画风。目前做过警示海报和纸片拼贴两种。插头电线的外观用 <code>PK.setSkin()</code> 跟着画风调整，结构和校验不变。</p></details>
+        <details><summary>能做 CRST 以外的品牌或主题吗？</summary><p>流程本身通用，但素材和规则是按 CRST 和用电安全写的。换品牌要替换模板里的 logo、二维码、产品图，以及 <code>references/product-and-brand.md</code> 里的产品事实表。</p></details>
+        <details><summary>Windows 能用吗？</summary><p>没验证过。部分脚本用 zsh 和 macOS 自带的 sips 命令。生图入口 <code>imagegen.py</code> 本身只用 Python 标准库，换成 API 后端理论上可以跨平台。</p></details>
+        <details><summary>没有 Blender 和 CRST Pro 模型库，产品图怎么办？</summary><p>用官方的白底产品图。<code>tools/sticker_outline.py</code> 会抠图并加上白黑两层贴纸描边，在任何底色上都清楚。第一支片的结尾就是这样做的。</p></details>
+        <details><summary>竖屏底部为什么总是空着？</summary><p>TikTok、Reels、Shorts 的底部约 380 像素会被平台的标题、按钮挡住，skill 规定这里不放重要内容。</p></details>
+        <details><summary>会不会泄露 API key？</summary><p>key 只放在你电脑上的 <code>~/.config/crst-safety-video/config.env</code> 或环境变量里，仓库里没有，脚本也不会打印。上传 GitHub 前检查过全部提交历史，没有任何 key。</p></details>
+      </div>
+    </section>
+
+    <section id="versions">
+      <div class="h2"><div class="eyebrow">版本记录</div><h2>版本记录</h2></div>
+      <ol class="versions">
+        <li><b>v1.5</b><span>2026-10-08</span><p>同时支持 Codex：安装脚本自动装给本机的 Claude Code 和 Codex，仓库只留一份；补充在 Codex 里运行的注意事项。</p></li>
+        <li><b>v1.4</b><span>2026-10-08 · 上传 GitHub</span><p>生图后端可换：本机 Codex、OpenAI 兼容 API、Gemini API、Antigravity、自定义命令；key 统一放配置文件；新增安装脚本和环境检查。</p></li>
+        <li><b>v1.3</b><span>2026-10-08</span><p>新增 Ray 2D 角色库（10 个姿势，含口型和眨眼），角色动画拆成独立模块；新增库同步和打包脚本；帽徽按帽檐角度贴正。</p></li>
+        <li><b>v1.2</b><span>2026-10-07 · 第二支片</span><p>PlugKit 新增三转二转接头；试过 3D 角色实时渲染，被否后改为 2D 动作帧做法。</p></li>
+        <li><b>v1.1</b><span>2026-10-07</span><p>改成「流程固定、画风不固定」，每支片先出三个风格方向；PlugKit 支持换皮肤；新增 Codex 命令行生图流程。</p></li>
+        <li><b>v1.0</b><span>2026-10-07 · 第一支片</span><p>从第一支片的六版迭代整理出工程模板、PlugKit 接线库、配音时间轴、产品渲染和验收清单。</p></li>
+      </ol>
+    </section>
+
+    <section id="related">
+      <div class="h2"><div class="eyebrow">相关 Skill</div><h2>它站在谁的肩膀上</h2></div>
+      <div class="related">
+        <div class="rel">
+          <span class="tag">开源 · MIT · 作者 花叔</span>
+          <h3>huashu-art-motion</h3>
+          <p>通用的艺术动画 skill：35 种艺术风格配方、9 种解说动画语法、拆解复刻工具和一键验收。</p>
+          <ul>
+            <li>第一支片借用了它的方法：先拆机制再写代码、三方向让人挑、画面必须一直在动</li>
+            <li>人物交给生图模型出帧，代码负责合成和换帧</li>
+            <li>交付前派独立 agent 只看成片挑问题</li>
+          </ul>
+          <div class="code" data-copy="npx skills add alchaincyf/huashu-art-motion">npx skills add alchaincyf/huashu-art-motion</div>
+          <a class="more" href="https://github.com/alchaincyf/huashu-art-motion" target="_blank" rel="noopener">GitHub 主页 →</a>
+        </div>
+        <div class="rel">
+          <span class="tag">成果展示</span>
+          <h3>CRST 短片制作实录</h3>
+          <p>用这个 skill 做出的两支成片，横竖两版都能点开播放，还有 3D 换 2D 的前后对比。</p>
+          <ul>
+            <li>5 Power Strip Mistakes That Start House Fires</li>
+            <li>Surge Protector vs. Power Strip</li>
+          </ul>
+          <a class="more" href="../">打开展示页 →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>crst-safety-video v1.5 · 公司内部使用 · <a href="https://github.com/sundyme/crst-safety-video" target="_blank" rel="noopener">github.com/sundyme/crst-safety-video</a></footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-labelledby="lb-title" hidden>
+  <figure>
+    <img id="lb-img" alt="">
+    <figcaption class="bar2"><b id="lb-title"></b><span class="ctl"><button class="x" type="button" id="lb-prev" aria-label="上一张">←</button><button class="x" type="button" id="lb-next" aria-label="下一张">→</button><button class="x" type="button" id="lb-close">关闭（Esc）</button></span></figcaption>
+  </figure>
+</div>
+
+<script>
+// 方向对比：点缩略图切换，点大图放大；大图里 ← → 切换
+(() => {
+  const lb = document.getElementById('lb'), img = document.getElementById('lb-img'), ttl = document.getElementById('lb-title');
+  let cur = null, opener = null;
+  const show = i => { const t = cur.tabs, n = (i + t.length) % t.length; cur.select(n); img.src = t[n].dataset.full; img.alt = t[n].dataset.alt || t[n].querySelector('img').alt; ttl.textContent = cur.name + ' · ' + t[n].dataset.label + '（' + (n + 1) + '/' + t.length + '）'; };
+  const close = () => { lb.hidden = true; document.body.style.overflow = ''; if (opener) opener.focus(); };
+  document.querySelectorAll('.dirpick').forEach(box => {
+    const stage = box.querySelector('.stage'), sImg = stage.querySelector('img'), lab = stage.querySelector('.lab'), tabs = [...box.querySelectorAll('.thumbs button')];
+    const g = { name: box.dataset.lb, tabs, i: 0, select(n) { g.i = n; tabs.forEach((b, k) => b.setAttribute('aria-selected', k === n)); const b = tabs[n]; sImg.src = b.dataset.full; sImg.alt = b.dataset.alt || b.querySelector('img').alt; lab.textContent = b.dataset.label; lab.classList.toggle('pick', b.hasAttribute('data-pick')); } };
+    tabs.forEach((b, k) => { b.addEventListener('click', () => g.select(k)); new Image().src = b.dataset.full; });
+    box.querySelector('.thumbs').addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); const n = (g.i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length; g.select(n); tabs[n].focus(); } });
+    stage.addEventListener('click', () => { cur = g; opener = stage; show(g.i); lb.hidden = false; document.body.style.overflow = 'hidden'; document.getElementById('lb-close').focus(); });
+  });
+  document.getElementById('lb-prev').addEventListener('click', () => show(cur.i - 1));
+  document.getElementById('lb-next').addEventListener('click', () => show(cur.i + 1));
+  document.getElementById('lb-close').addEventListener('click', close);
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', e => { if (lb.hidden) return; if (e.key === 'Escape') close(); else if (e.key === 'ArrowRight') show(cur.i + 1); else if (e.key === 'ArrowLeft') show(cur.i - 1); });
+})();
+
+// 波形示意（固定种子）
+(() => {
+  const w = document.getElementById('wave'); if (!w) return;
+  let s = 7; const r = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+  for (let i = 0; i < 64; i++) { const gap = [12, 13, 28, 29, 40, 41, 56].includes(i); const el = document.createElement('i'); el.style.height = gap ? '4%' : (16 + r() * 80) + '%'; w.appendChild(el); }
+})();
+
+// 复制按钮
+document.querySelectorAll('[data-copy]').forEach(el => {
+  const b = document.createElement('button'); b.type = 'button'; b.className = 'copy'; b.textContent = '复制'; el.appendChild(b);
+  b.addEventListener('click', async () => {
+    const text = el.dataset.copy;
+    try { await navigator.clipboard.writeText(text); b.textContent = '已复制'; }
+    catch (e) { const sel = getSelection(), rg = document.createRange(); rg.selectNodeContents(el.firstChild || el); sel.removeAllRanges(); sel.addRange(rg); b.textContent = '已选中，按 ⌘C'; }
+    setTimeout(() => b.textContent = '复制', 1800);
+  });
+});
+
+// 目录高亮
+(() => {
+  const links = [...document.querySelectorAll('.toc a')], map = new Map(links.map(a => [a.getAttribute('href').slice(1), a]));
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { links.forEach(a => a.classList.remove('on')); map.get(e.target.id)?.classList.add('on'); } }), { rootMargin: '-30% 0px -60% 0px' });
+  map.forEach((a, id) => { const el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+
+</body>
+</html>
