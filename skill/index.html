@@ -194,6 +194,14 @@ td .req { display: inline-block; margin-left: 6px; font: 700 10.5px/1 var(--f-mo
 .term .ok { color: #6FE0B8; } .term .no { color: #FF8A7A; }
 
 
+.asks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.ask { background: var(--white); border-radius: var(--r); box-shadow: var(--shadow); padding: 18px 18px 14px; display: grid; gap: 10px; align-content: start; }
+.ask h3 { font: 900 16px/1.4 var(--f-cn); }
+.ask .prompt { box-shadow: none; background: var(--paper); font-size: 14.5px; }
+.ask .prompt .copy { background: var(--white); }
+.ask .note { font-size: 13px; color: var(--muted); }
+@media (max-width: 760px) { .asks { grid-template-columns: minmax(0, 1fr); } }
+#tech .faq details > .code, #tech .faq details > .tbl-box, #tech .faq details > .tree { margin: 10px 0 4px; }
 .prep { margin: 0 0 8px; padding: 0; list-style: none; display: grid; gap: 10px; counter-reset: p; }
 .prep > li { position: relative; background: var(--white); border-radius: 12px; box-shadow: var(--shadow); padding: 16px 18px 16px 58px; font-size: 15px; color: var(--ink-2); counter-increment: p; }
 .prep > li::before { content: counter(p); position: absolute; left: 18px; top: 16px; width: 26px; height: 26px; border-radius: 50%; background: var(--yel); color: var(--ink); font: 800 14px/26px var(--f-mono); text-align: center; }
@@ -281,13 +289,13 @@ footer { border-top: 1px solid var(--line); padding: 28px 32px 40px; color: var(
       <li><a href="#why">解决什么问题</a></li>
       <li><a href="#features">功能</a></li>
       <li><a href="#flow">工作流程</a></li>
-      <li><a href="#require">环境要求</a></li>
+      <li><a href="#require">准备</a></li>
       <li><a href="#install">安装</a></li>
-      <li><a href="#backends">生图后端</a></li>
+      <li><a href="#config">配置与维护</a></li>
       <li><a href="#use">使用</a></li>
       <li><a href="#ray">Ray 角色库</a></li>
-      <li><a href="#inside">包里有什么</a></li>
       <li><a href="#faq">常见问题</a></li>
+      <li><a href="#tech">技术说明</a></li>
       <li><a href="#versions">版本记录</a></li>
       <li><a href="#related">相关 Skill</a></li>
     </ol>
@@ -321,7 +329,7 @@ footer { border-top: 1px solid var(--line); padding: 28px 32px 40px; color: var(
         </article>
         <article class="feat">
           <div class="pic"><img src="media/plug_closeup.jpg" alt="代码画的插排和插头特写" width="700" height="520"></div>
-          <div class="txt"><h3>插头电线永远画对</h3><p>插头、插座、插排、转接头都是 NEMA 标准零件。场景只声明「哪个插头插进哪个孔」，出片前跑 <code>--check</code>，横竖两版都必须通过。外观可换皮肤，适配任何画风。</p><p class="say">试试说：<q>画面里要有电暖器插在插排上</q></p></div>
+          <div class="txt"><h3>插头电线永远画对</h3><p>插头、插座、插排、转接头都是 NEMA 标准零件。画面里只说「哪个插头插进哪个孔」，出片前自动逐帧检查，横竖两版都必须通过。外观可换皮肤，适配任何画风。</p><p class="say">试试说：<q>画面里要有电暖器插在插排上</q></p></div>
         </article>
         <article class="feat">
           <div class="pic vo" aria-hidden="true">
@@ -329,7 +337,7 @@ footer { border-top: 1px solid var(--line); padding: 28px 32px 40px; color: var(
             <div class="vo-row"><span>CRST</span><span class="hit">heavy-duty</span><span>strips</span><span class="hit">metal housing</span><span class="hit">2,800 J</span></div>
             <div class="vo-row ev"><span>Logo</span><span>产品弹入</span><span></span><span>卖点 1</span><span>卖点 2</span></div>
           </div>
-          <div class="txt"><h3>配音和时间轴</h3><p>MiniMax 逐句合成（默认 Deep_Voice_Man），可先用同一句试 3 到 5 个声音。画面事件写成 <code>at('c1', 'metal')</code>，说到 metal 时触发。配乐和音效用代码合成，口播时自动压低。</p><p class="say">试试说：<q>换个更温和的声音试试</q></p></div>
+          <div class="txt"><h3>配音和时间轴</h3><p>MiniMax 逐句合成（默认 Deep_Voice_Man），可先用同一句试 3 到 5 个声音。画面跟着台词走：说到哪个词，对应的画面就在那一刻出现。配乐和音效用代码合成，口播时自动压低。</p><p class="say">试试说：<q>换个更温和的声音试试</q></p></div>
         </article>
         <article class="feat">
           <div class="pic fit" style="background:#F4E8D2"><img src="media/ray_2d_sheet.jpg" alt="Ray 角色库 10 个姿势" width="1200" height="723"></div>
@@ -373,81 +381,95 @@ footer { border-top: 1px solid var(--line); padding: 28px 32px 40px; color: var(
     </section>
 
     <section id="require">
-      <div class="h2"><div class="eyebrow">环境要求</div><h2>装之前先准备这些</h2><p>只在 macOS 上验证过。不用一项项对照：安装时 AI 会检查并补齐，最后告诉你还缺什么。</p></div>
+      <div class="h2"><div class="eyebrow">准备</div><h2>你只需要准备这几样</h2><p>只在 Mac 上验证过。其他软件和工具，安装时 AI 会帮你装好，不用管。</p></div>
       <div class="tbl-box">
         <table>
-          <thead><tr><th>需要</th><th>用途</th><th>怎么准备</th></tr></thead>
+          <thead><tr><th>准备什么</th><th>用来做什么</th><th>从哪来</th></tr></thead>
           <tbody>
-            <tr><td>Claude Code 或 Codex<span class="req">二选一</span></td><td>运行这个 skill</td><td>Claude 桌面版的 Code 页或 <code>claude</code> 命令；Codex 应用或 <code>codex</code> 命令。两个都装也行</td></tr>
-            <tr><td>安装包<span class="req">必需</span></td><td>安装和更新 skill</td><td>公司群里的 <code>crst-safety-video-v1.6.zip</code>（16 MB），存到「下载」文件夹</td></tr>
-            <tr><td>uv、ffmpeg<span class="req">必需</span></td><td>运行脚本、合成音视频</td><td>安装时 AI 会帮你装</td></tr>
-            <tr><td>Playwright Chromium<span class="req">必需</span></td><td>逐帧渲染画面</td><td>安装时 AI 会帮你装</td></tr>
-            <tr><td>MiniMax API key<span class="req">配音需要</span></td><td>英文配音</td><td>填进配置文件</td></tr>
-            <tr><td>一个生图后端<span class="req">生图需要</span></td><td>角色动作、背景、道具</td><td>本机 Codex 或任一生图 API，见下方「生图后端」</td></tr>
-            <tr><td>Blender＋CRST Pro 模型<span class="opt">可选</span></td><td>渲染真实产品图</td><td>没有就用官方产品白底图，脚本会抠图加描边</td></tr>
+            <tr><td>Claude Code 或 Codex<span class="req">二选一</span></td><td>和 AI 对话，做片</td><td>Claude 桌面版的 Code 页，或 Codex 应用；登录好账号。两个都有也行</td></tr>
+            <tr><td>安装包<span class="req">必需</span></td><td>安装和更新</td><td>公司群里的 <code>crst-safety-video-v1.6.zip</code></td></tr>
+            <tr><td>MiniMax key<span class="req">配音需要</span></td><td>生成英文配音</td><td>找维护者要。没有也能先做选题、脚本和画面</td></tr>
+            <tr><td>生图账号<span class="opt">通常已有</span></td><td>画角色动作、背景</td><td>电脑上装了 ChatGPT 桌面版或 Codex 并已登录，就不用另外准备；也可以用 OpenAI 或 Gemini 的 key</td></tr>
           </tbody>
         </table>
       </div>
     </section>
 
     <section id="install">
-      <div class="h2"><div class="eyebrow">安装</div><h2>把安装包交给 AI，让它来装</h2><p>不需要 GitHub 账号，也不用自己敲命令。每台电脑环境不一样，安装包里有一份写给 AI 的安装指南 <code>INSTALL.md</code>：Claude Code 或 Codex 会按你电脑的实际情况处理，某一步出错会自己换办法。</p></div>
-
+      <div class="h2"><div class="eyebrow">安装</div><h2>把安装包交给 AI，让它来装</h2><p>不需要 GitHub 账号，也不用自己敲命令。安装包里有一份写给 AI 的安装指南，Claude Code 或 Codex 会按你电脑的实际情况处理，某一步出错会自己换办法。</p></div>
       <ol class="prep">
         <li><b>从公司群下载安装包</b>文件名是 <code>crst-safety-video-v1.6.zip</code>（16 MB，以群里最新版本为准）。<b class="i">存到「下载」文件夹</b>：微信里右键文件选「另存为」；飞书、钉钉默认就存在「下载」里。不用自己解压。</li>
-        <li><b>交给 Claude Code 或 Codex</b>打开任意一个，把 zip <b class="i">拖进对话框</b>（会自动填上文件路径；不拖也行，它会去「下载」里找），再粘贴下面这句话发送：
+        <li><b>交给 Claude Code 或 Codex</b>打开任意一个，把 zip <b class="i">拖进对话框</b>（不拖也行，它会去「下载」里找），再粘贴这句话发送：
           <div class="prompt" style="margin-top:10px" data-copy="帮我安装 crst-safety-video skill。安装包是我拖进来的 zip；没拖的话，在「下载」文件夹里找 crst-safety-video-v 开头的 zip，找不到就问我。先解压到临时文件夹，读里面的 INSTALL.md，按它把 skill 装好、补齐依赖、跑环境检查，最后告诉我结果和还需要我做的事。">帮我安装 crst-safety-video skill。安装包是我拖进来的 zip；没拖的话，在「下载」文件夹里找 crst-safety-video-v 开头的 zip，找不到就问我。先解压到临时文件夹，读里面的 INSTALL.md，按它把 skill 装好、补齐依赖、跑环境检查，最后告诉我结果和还需要我做的事。</div></li>
-        <li><b>中途点允许</b>它要运行命令、联网、写入 skills 目录时会征求你同意，点允许。装依赖（uv、ffmpeg、Playwright 浏览器）要下载一两百 MB，等它跑完。如果电脑没有 Homebrew，安装要输入开机密码，<b class="i">它会把命令给你，请你自己在「终端」里运行</b>，运行完告诉它继续。</li>
-        <li><b>按它给的清单收尾</b>通常只剩两件事：
-          <ul class="ticks">
-            <li><b class="i">填配音 key</b>：它会帮你打开配置文件 <code>~/.config/crst-safety-video/config.env</code>，你自己把 MiniMax key 填在 <code>MINIMAX_API_KEY=</code> 后面保存。<b class="i">不要把 key 发到对话里。</b></li>
-            <li><b class="i">重新打开 Claude Code</b>，或<b class="i">新开一个 Codex 会话</b>，新 skill 才会出现。</li>
-          </ul></li>
+        <li><b>中途点允许</b>它要运行命令、联网、写入文件时会征求你同意，点允许。装工具要下载一两百 MB，等它跑完。少数电脑要装 Homebrew，需要输入开机密码：<b class="i">它会给你一行命令，请你粘贴到「终端」里运行</b>，这是唯一可能要你动手的地方。</li>
+        <li><b>填配音 key，重新打开</b>它会在屏幕上<b class="i">弹出一个输入框</b>，把 MiniMax key 粘贴进去点「保存」就行，key 不会出现在对话里。最后<b class="i">重新打开 Claude Code</b>，或<b class="i">新开一个 Codex 会话</b>。</li>
       </ol>
-
-      <h3 class="sub-h">装好之后：填配置</h3>
-      <p class="plain">所有 key 和选项都在 <code>~/.config/crst-safety-video/config.env</code>。这个文件只在你的电脑上，不在安装包里，更新也不会动它，脚本也不会打印 key。用文本编辑器打开：</p>
-      <div class="code" data-copy="open -e ~/.config/crst-safety-video/config.env">open -e ~/.config/crst-safety-video/config.env</div>
-      <div class="code"><span class="c"># 配音（必填）</span>
-MINIMAX_API_KEY=你的key
-<span class="c"># 生图后端：留空自动选；本机装了 Codex 通常什么都不用填</span>
-IMAGEGEN_BACKEND=</div>
-
-      <h3 class="sub-h">检查环境</h3>
-      <p class="plain">随时可以运行，逐项打勾，缺的会给出补齐命令（只用 Codex 的把路径里的 <code>.claude</code> 换成 <code>.codex</code>）：</p>
-      <div class="code" data-copy="python3 ~/.claude/skills/crst-safety-video/scripts/doctor.py">python3 ~/.claude/skills/crst-safety-video/scripts/doctor.py</div>
-      <div class="term" aria-label="环境检查输出示例">crst-safety-video v1.6 环境检查
-
-<span class="ok">✓</span> Claude Code：已安装 ~/.claude/skills/crst-safety-video
-<span class="ok">✓</span> Codex：已安装 ~/.codex/skills/crst-safety-video → ~/.claude/skills/crst-safety-video
-<span class="ok">✓</span> uv：/opt/homebrew/bin/uv
-<span class="ok">✓</span> ffmpeg：/opt/homebrew/bin/ffmpeg
-<span class="no">✗</span> Playwright Chromium：没找到
-    → uv run --with playwright playwright install chromium
-<span class="ok">✓</span> MiniMax 配音 key：已设置
-生图后端：<span class="ok">✓</span> codex　· openai　· gemini　· antigravity　· command
-当前会用：codex</div>
-
-      <h3 class="sub-h">以后更新</h3>
-      <p class="plain">群里发了新版安装包，同样拖给 Claude Code 或 Codex，说：</p>
-      <div class="prompt" data-copy="按这个安装包里的 INSTALL.md 帮我更新 crst-safety-video skill，最后告诉我更新到了哪个版本。">按这个安装包里的 INSTALL.md 帮我更新 crst-safety-video skill，最后告诉我更新到了哪个版本。</div>
-      <p class="plain" style="margin-top:10px">旧版本会挪到 <code>~/.config/crst-safety-video/backup/</code>；你自己补进角色库的新姿势会保留；配置文件不动。</p>
-      <div class="callout"><b>装好后重新打开 Claude Code，或新开一个 Codex 会话。</b>提到用电安全视频、插排科普、CRST 视频时会自动用上这个 skill；也可以直接说「用 crst-safety-video」。</div>
-
-      <h3 class="sub-h">在 Codex 里用的区别</h3>
-      <ul class="diffs">
-        <li><b>生图</b>Codex 自带图像工具，可以直接用，不需要另外配置生图后端。</li>
-        <li><b>联网</b>Codex 默认沙盒不联网，而配音、首次下载依赖、生图 API 都要联网。遇到网络错误时批准那条命令，或在 <code>~/.codex/config.toml</code> 里打开：
-          <div class="code" data-copy="[sandbox_workspace_write]
-network_access = true">[sandbox_workspace_write]
-network_access = true</div></li>
-        <li><b>审片</b>如果不能开子 agent，Codex 会请你新开一个会话，把审片提示词和成片静帧贴进去。</li>
-      </ul>
+      <div class="callout"><b>不要把 key 直接发在对话里。</b>需要填 key 时让 AI 弹出输入框；如果已经发了，请找维护者换一个新 key。</div>
     </section>
 
-    <section id="backends">
-      <div class="h2"><div class="eyebrow">生图后端</div><h2>生图工具不写死，手上有哪个用哪个</h2><p>所有生图都走同一个入口 <code>tools/imagegen.py</code>。在配置文件里选后端，流程和提示词都不用改。留空时按表格顺序自动选第一个可用的。</p></div>
-      <div class="tbl-box">
+    <section id="config">
+      <div class="h2"><div class="eyebrow">配置与维护</div><h2>配置、检查、更新、排错，都是说一句话</h2><p>不用找配置文件，也不用记命令。在 Claude Code 或 Codex 里说下面这些话就行，开头带上 <code>crst-safety-video</code>，AI 就知道是在说这个 skill。</p></div>
+      <div class="asks">
+        <div class="ask"><h3>填 key</h3><div class="prompt" data-copy="用 crst-safety-video 帮我填 MiniMax 配音 key。">用 crst-safety-video 帮我填 MiniMax 配音 key。<small>会弹出输入框，粘贴后点保存</small></div><div class="prompt" data-copy="crst-safety-video：我的 MiniMax 是海外账号，帮我改好配置。">crst-safety-video：我的 MiniMax 是海外账号，帮我改好配置。<small>配音报地区或 401 错误时</small></div></div>
+        <div class="ask"><h3>检查环境</h3><div class="prompt" data-copy="检查一下 crst-safety-video 的环境，缺什么帮我补上。">检查一下 crst-safety-video 的环境，缺什么帮我补上。<small>装完、换电脑、或者突然不好用时</small></div><div class="prompt" data-copy="crst-safety-video 现在是哪个版本？配置了哪些？">crst-safety-video 现在是哪个版本？配置了哪些？<small>key 只显示「已设置」，不显示内容</small></div></div>
+        <div class="ask"><h3>换生图方式</h3><div class="prompt" data-copy="crst-safety-video：我想用 OpenAI 的 key 生图，帮我配好。">crst-safety-video：我想用 OpenAI 的 key 生图，帮我配好。<small>也可以说 Gemini；会弹框填 key</small></div><div class="prompt" data-copy="crst-safety-video：生图换回 Codex。">crst-safety-video：生图换回 Codex。<small>或者说「自动选」</small></div></div>
+        <div class="ask"><h3>更新</h3><div class="prompt" data-copy="按这个安装包里的 INSTALL.md 帮我更新 crst-safety-video skill，最后告诉我更新到了哪个版本。">按这个安装包里的 INSTALL.md 帮我更新 crst-safety-video skill，最后告诉我更新到了哪个版本。<small>先把群里的新安装包拖进对话框</small></div><p class="note">旧版本会自动备份；你自己补的 Ray 姿势、配置和 key 都会保留。</p></div>
+        <div class="ask"><h3>出错了</h3><div class="prompt" data-copy="刚才这一步报错了，帮我查一下原因并修好。">刚才这一步报错了，帮我查一下原因并修好。<small>直接把报错或截图贴给它也行</small></div><div class="prompt" data-copy="crst-safety-video：Codex 老是提示没网络，帮我设置好。">crst-safety-video：Codex 老是提示没网络，帮我设置好。<small>Codex 默认不联网，配音和生图需要联网</small></div></div>
+        <div class="ask"><h3>卸载</h3><div class="prompt" data-copy="帮我卸载 crst-safety-video skill。">帮我卸载 crst-safety-video skill。<small>会挪到废纸篓，并问你要不要清掉 key 和备份</small></div></div>
+      </div>
+    </section>
+
+    <section id="use">
+      <div class="h2"><div class="eyebrow">使用</div><h2>新建一个空文件夹，打开它，然后直接说</h2><p>AI 会建好工程，之后每个需要拍板的地方（选题、风格、声音、审片意见）都会停下来问你。成片、字幕、发布文案都放在这个文件夹里。</p></div>
+      <div class="prompts">
+        <div class="prompt" data-copy="用 crst-safety-video，做一支面向美国家庭的用电安全科普视频，先给我 3 个选题。">用 crst-safety-video，做一支面向美国家庭的用电安全科普视频，先给我 3 个选题。<small>从零开始一支新片</small></div>
+        <div class="prompt" data-copy="选题 2，用 C 风格做一版，横屏和竖屏都要。">选题 2，用 C 风格做一版，横屏和竖屏都要。<small>选定选题和风格后开做</small></div>
+        <div class="prompt" data-copy="先出几张静帧给我看看效果。">先出几张静帧给我看看效果。<small>正式渲染前先看画面</small></div>
+        <div class="prompt" data-copy="换个更温和的声音试试，给我听几个候选。">换个更温和的声音试试，给我听几个候选。<small>配音不满意时</small></div>
+        <div class="prompt" data-copy="Ray 需要一个手拿插排介绍的动作，补进角色库。">Ray 需要一个手拿插排介绍的动作，补进角色库。<small>补新姿势，片子验收后收回库里</small></div>
+        <div class="prompt" data-copy="出片，派一个独立 agent 审一遍，按问题严重程度修完再给我。">出片，派一个独立 agent 审一遍，按问题严重程度修完再给我。<small>出片和验收</small></div>
+        <div class="prompt" data-copy="把字幕、章节时间和发布文案也给我。">把字幕、章节时间和发布文案也给我。<small>交付</small></div>
+      </div>
+    </section>
+
+    <section id="ray">
+      <div class="h2"><div class="eyebrow">Ray 角色库</div><h2>10 个姿势，越用越全</h2><p>新片自带这些姿势，AI 会按台词让 Ray 换动作，并自动加上口型和眨眼。缺动作就直接说，例如「Ray 需要一个蹲下检查插座的动作」，AI 会照着母版画出新姿势，片子验收后收进角色库，下一支片就能直接用。</p></div>
+      <div class="ray">
+        <figure class="sheet"><img src="media/ray_2d_sheet.jpg" alt="Ray 的 10 个姿势总览" width="1200" height="723"></figure>
+        <div class="poses"><code>idle</code><code>up</code><code>point</code><code>explain</code><code>stop</code><code>thumbsup</code><code>nope</code><code>shocked</code><code>wave_a</code><code>wave_b</code></div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="h2"><div class="eyebrow">常见问题</div><h2>常见问题</h2></div>
+      <div class="faq">
+        <details><summary>我完全不懂代码，能用吗？</summary><p>能。这套流程就是按这个前提设计的：安装、配置、做片、排错都通过对话完成，AI 自己运行命令、改文件。你要做的是挑选题、挑风格、听配音、看成片提意见。</p></details>
+        <details><summary>AI 让我输入密码或在「终端」里运行命令，安全吗？</summary><p>只有安装 Homebrew（Mac 上常用的软件安装工具）时需要，命令来自 Homebrew 官网，要输入开机密码是正常的。其他情况 AI 不应该向你要密码；遇到可疑要求，先问维护者。</p></details>
+        <details><summary>装完了，但 Claude Code / Codex 里用不上</summary><p>装好后要<b>重新打开 Claude Code</b>，或<b>新开一个 Codex 会话</b>，已经开着的会话看不到新 skill。还不行，就说「检查一下 crst-safety-video 的环境」。</p></details>
+        <details><summary>弹出「需要安装命令行开发者工具」</summary><p>新电脑第一次装时 macOS 会弹这个框，点「安装」，等它装完（几分钟），再告诉 AI 继续。</p></details>
+        <details><summary>没有 MiniMax key 能用吗？</summary><p>能先做选题、脚本、风格和画面，只有生成配音需要 key。拿到 key 后说「帮我填 MiniMax key」，再让它配音，画面会自动对齐新的配音。</p></details>
+        <details><summary>没有 ChatGPT 账号能生图吗？</summary><p>能。有 OpenAI 或 Gemini 的 key，说「我想用 Gemini 生图，帮我配好」。公司有内部生图工具也能接，找维护者。</p></details>
+        <details><summary>会不会泄露 key？</summary><p>key 通过弹出的输入框保存在你自己电脑上（<code>~/.config/crst-safety-video/</code>），不在安装包里，AI 和脚本都不会显示内容。只要不把 key 发在对话或群里就安全。</p></details>
+        <details><summary>我自己补的 Ray 姿势，更新时会被覆盖吗？</summary><p>不会。更新时会自动搬到新版，旧版整份备份。好用的姿势可以发给维护者，收进下一版安装包。</p></details>
+        <details><summary>我用的是 Codex，不是 Claude Code，能用吗？</summary><p>能，流程一样。Codex 默认不联网，配音和生图会被拦，说「Codex 老是提示没网络，帮我设置好」就行。独立审片如果开不了子 agent，它会请你新开一个会话。</p></details>
+        <details><summary>可以换画风吗？</summary><p>可以，而且每支片都会换。skill 固定的是流程，不是画风。目前做过警示海报和纸片拼贴两种。插头电线的外观也会跟着画风调整，结构和校验不变。</p></details>
+        <details><summary>能做 CRST 以外的品牌或主题吗？</summary><p>流程本身通用，但素材和规则是按 CRST 和用电安全写的。换品牌要替换模板里的 logo、二维码、产品图，以及 <code>references/product-and-brand.md</code> 里的产品事实表。</p></details>
+        <details><summary>竖屏底部为什么总是空着？</summary><p>TikTok、Reels、Shorts 的底部约 380 像素会被平台的标题、按钮挡住，skill 规定这里不放重要内容。</p></details>
+        <details><summary>Windows 能用吗？</summary><p>没验证过，目前只支持 Mac。</p></details>
+      </div>
+    </section>
+
+    <section id="tech">
+      <div class="h2"><div class="eyebrow">给技术同事</div><h2>技术说明</h2><p>不懂代码的同事可以跳过这一节，下面这些 AI 都会自己处理。</p></div>
+      <div class="faq">
+        <details><summary>手动安装（不用 AI）</summary><p>在「终端」里运行，版本号按实际改；缺的工具按环境检查里 → 的提示补上。</p><div class="code" data-copy="D=$(mktemp -d); unzip -q ~/Downloads/crst-safety-video-v1.6.zip -d $D
+zsh $D/crst-safety-video/scripts/install.sh">D=$(mktemp -d); unzip -q ~/Downloads/crst-safety-video-v1.6.zip -d $D
+zsh $D/crst-safety-video/scripts/install.sh</div><p>装到 <code>~/.claude/skills/crst-safety-video</code> 或 <code>~/.codex/skills/crst-safety-video</code>，两个都有时只放一份、另一个放链接。参数：<code>--claude</code> <code>--codex</code> <code>--force</code>（允许降级）。</p></details>
+        <details><summary>配置文件与命令行工具</summary><p>配置在 <code>~/.config/crst-safety-video/config.env</code>（权限 600）；环境变量优先。</p><div class="code">python3 ~/.claude/skills/crst-safety-video/scripts/doctor.py          <span class="c"># 环境检查</span>
+python3 ~/.claude/skills/crst-safety-video/scripts/config.py show     <span class="c"># 看配置（key 不显示内容）</span>
+python3 ~/.claude/skills/crst-safety-video/scripts/config.py set MINIMAX_API_KEY   <span class="c"># 弹框输入 key</span>
+python3 ~/.claude/skills/crst-safety-video/scripts/config.py set IMAGEGEN_BACKEND gemini</div></details>
+        <details><summary>生图后端</summary><p>所有生图都走 <code>tools/imagegen.py</code>，后端由 <code>IMAGEGEN_BACKEND</code> 决定，留空按下表顺序自动选第一个可用的。同一组系列图（例如 Ray 某个姿势的闭嘴、张嘴、眨眼三张）要用同一个后端做完。</p><div class="tbl-box">
         <table>
           <thead><tr><th>后端</th><th>需要</th><th>适合</th></tr></thead>
           <tbody>
@@ -458,54 +480,16 @@ network_access = true</div></li>
             <tr><td><code>command</code></td><td><code>IMAGEGEN_COMMAND</code> 命令模板</td><td>接入公司内部或其他任何生图工具</td></tr>
           </tbody>
         </table>
-      </div>
-      <h3 class="sub-h">换后端</h3>
-      <p class="plain">长期换：改配置文件里的 <code>IMAGEGEN_BACKEND</code>。临时换：让 Claude 「这批图用 gemini 生成」，或手动加 <code>--backend</code>：</p>
-      <div class="code" data-copy="python3 tools/imagegen.py one out.png &quot;a cozy living room, flat vector&quot; --backend openai"><span class="c"># 在项目目录里；看当前可用后端用 doctor</span>
-python3 tools/imagegen.py doctor
-python3 tools/imagegen.py one out.png "a cozy living room, flat vector" --backend openai</div>
-      <h3 class="sub-h">接入自定义工具</h3>
-      <p class="plain">任何能从命令行出图的工具都能接。脚本会把提示词写进临时文件，替换占位符 <code>{out}</code> <code>{prompt_file}</code> <code>{refs}</code> <code>{size}</code> 后执行：</p>
-      <div class="code">IMAGEGEN_BACKEND=command
-IMAGEGEN_COMMAND=mytool gen --out {out} --prompt-file {prompt_file} {refs}</div>
-      <div class="callout"><b>同一组系列图用同一个后端做完。</b>例如 Ray 某个姿势的闭嘴、张嘴、眨眼三张，换后端画风可能有差别，补丁会对不上。</div>
-    </section>
-
-    <section id="use">
-      <div class="h2"><div class="eyebrow">使用</div><h2>在 Claude Code 里打开一个空文件夹，然后直接说</h2><p>Claude 会用 <code>scripts/new_project.sh</code> 建好工程：复制模板、拷入角色素材、git 初始化并做初始提交。之后每一步都会停下来让你选。</p></div>
-      <div class="prompts">
-        <div class="prompt" data-copy="用 crst-safety-video，做一支面向美国家庭的用电安全科普视频，先给我 3 个选题。">用 crst-safety-video，做一支面向美国家庭的用电安全科普视频，先给我 3 个选题。<small>从零开始一支新片</small></div>
-        <div class="prompt" data-copy="选题 2，用 C 风格做一版，横屏和竖屏都要。">选题 2，用 C 风格做一版，横屏和竖屏都要。<small>选定选题和风格后开做</small></div>
-        <div class="prompt" data-copy="Ray 需要一个手拿插排介绍的动作，补进角色库。">Ray 需要一个手拿插排介绍的动作，补进角色库。<small>补新姿势，片子验收后收回库里</small></div>
-        <div class="prompt" data-copy="出片，派一个独立 agent 审一遍，按问题严重程度修完再给我。">出片，派一个独立 agent 审一遍，按问题严重程度修完再给我。<small>出片和验收</small></div>
-      </div>
-      <h3 class="sub-h">常用命令</h3>
-      <p style="color:var(--ink-2);font-size:15px">Claude 会自己跑这些命令。想手动检查时，在项目的 <code>代码工程</code> 目录里执行：</p>
-      <div class="code" data-copy="uv run --with playwright python render_film.py --o h --check 0.1"><span class="c"># 接线校验（横竖两版都要通过）</span>
-uv run --with playwright python render_film.py --o h --check 0.1</div>
-      <div class="code" data-copy="uv run --with playwright python render_film.py --o h --stills 3,20,45 --out ../渲染/静帧_h"><span class="c"># 出几张静帧看效果</span>
-uv run --with playwright python render_film.py --o h --stills 3,20,45 --out ../渲染/静帧_h</div>
-      <div class="code" data-copy="uv run --with playwright python render_film.py --o h --out ../成片/片名_16x9_v1.mp4 --audio ../音频/mix.wav"><span class="c"># 渲染成片（竖屏把 h 换成 v）</span>
-uv run --with playwright python render_film.py --o h --out ../成片/片名_16x9_v1.mp4 --audio ../音频/mix.wav</div>
-    </section>
-
-    <section id="ray">
-      <div class="h2"><div class="eyebrow">Ray 角色库</div><h2>10 个姿势，越用越全</h2><p>新工程自带全部成品帧和动画模块。场景里写 <code>act(时间, '姿势名')</code>，Ray 就会换动作，并自动加上预备、回弹、呼吸、口型和眨眼。</p></div>
-      <div class="ray">
-        <figure class="sheet"><img src="media/ray_2d_sheet.jpg" alt="Ray 的 10 个姿势总览" width="1200" height="723"></figure>
-        <div class="poses"><code>idle</code><code>up</code><code>point</code><code>explain</code><code>stop</code><code>thumbsup</code><code>nope</code><code>shocked</code><code>wave_a</code><code>wave_b</code></div>
-      </div>
-      <h3 class="sub-h">补一个新姿势</h3>
-      <ol class="install">
-        <li><div><h3>用母版改图</h3><p>生图后端以 <code>base.png</code> 为母版，只改胳膊、手和表情，生成闭嘴帧；再分别只改嘴、只改眼睛，生成张嘴帧和眨眼帧。所有新动作都从同一张母版改，避免一代代走样。</p></div></li>
-        <li><div><h3>后期处理</h3><p><code>tools/process_ray2d.py</code> 抠绿幕、按帽檐角度印上真 logo、切出口型和眨眼补丁。结果合并进位置表，旧姿势不受影响。</p></div></li>
-        <li><div><h3>收回库里</h3><p>片子验收后运行 <code>scripts/ray2d_library.py push &lt;项目&gt;</code>，新姿势进入角色库，总览图自动重画。下一支片就能直接用。</p></div></li>
-      </ol>
-    </section>
-
-    <section id="inside">
-      <div class="h2"><div class="eyebrow">包里有什么</div><h2>目录结构</h2></div>
-<div class="tree">crst-safety-video/
+      </div><p>接入其他生图工具（command 后端），占位符 <code>{out}</code> <code>{prompt_file}</code> <code>{refs}</code> <code>{size}</code>：</p><div class="code">IMAGEGEN_BACKEND=command
+IMAGEGEN_COMMAND=mytool gen --out {out} --prompt-file {prompt_file} {refs}</div></details>
+        <details><summary>常用渲染命令</summary><p>在项目的 <code>代码工程</code> 目录里：</p><div class="code"><span class="c"># 接线校验（横竖两版都要通过）</span>
+uv run --with playwright python render_film.py --o h --check 0.1
+<span class="c"># 静帧</span>
+uv run --with playwright python render_film.py --o h --stills 3,20,45 --out ../渲染/静帧_h
+<span class="c"># 成片（竖屏把 h 换成 v）</span>
+uv run --with playwright python render_film.py --o h --out ../成片/片名_16x9_v1.mp4 --audio ../音频/mix.wav</div></details>
+        <details><summary>Ray 角色库的做法</summary><p>新姿势用 <code>library/ray2d/source/base.png</code> 做母版改图（闭嘴帧），再分别只改嘴、只改眼睛得到张嘴帧和眨眼帧；<code>tools/process_ray2d.py</code> 抠绿幕、印真 logo、切口型和眨眼补丁；验收后 <code>scripts/ray2d_library.py push &lt;项目&gt;</code> 收回角色库。场景里用 <code>act(时间, '姿势名')</code> 切动作。</p></details>
+        <details><summary>包里有什么</summary><div class="tree">crst-safety-video/
 ├── SKILL.md              <span class="c"># 给 Claude 的流程说明（8 步）</span>
 ├── README.md             <span class="c"># 给人看的说明：功能、环境、安装、使用</span>
 ├── CHANGELOG.md          <span class="c"># 版本记录</span>
@@ -515,36 +499,14 @@ uv run --with playwright python render_film.py --o h --out ../成片/片名_16x9
 ├── scripts/
 │   ├── install.sh        <span class="c"># 安装 / 更新（Claude Code、Codex）</span>
 │   ├── doctor.py         <span class="c"># 环境检查</span>
+│   ├── config.py         <span class="c"># 读写配置（key 弹窗输入）</span>
 │   ├── new_project.sh    <span class="c"># 新建工程</span>
 │   ├── ray2d_library.py  <span class="c"># 角色库 ⇄ 项目同步（pull / push / sheet）</span>
 │   └── package.sh        <span class="c"># 打安装包</span>
 └── template/             <span class="c"># 工程模板</span>
     ├── 代码工程/          <span class="c"># 画面运行时、PlugKit、ray2d.js、渲染脚本、字体、角色成品帧</span>
     ├── 音频/              <span class="c"># 配音、口型、配乐与混音脚本</span>
-    └── tools/            <span class="c"># imagegen.py 生图入口、抠图、logo 替换、产品渲染、字幕</span></div>
-      <p style="margin-top:14px;color:var(--muted);font-size:14px"><code>library/ray2d/source/</code> 只带母版和参考图；各姿势的原始生成帧（约 44 MB）不在安装包里，在维护者那里；只有重新切口型补丁时才需要。</p>
-    </section>
-
-    <section id="faq">
-      <div class="h2"><div class="eyebrow">常见问题</div><h2>常见问题</h2></div>
-      <div class="faq">
-        <details><summary>AI 装到一半卡住或报错怎么办？</summary><p>直接把报错告诉它，或者说「按 INSTALL.md 里『出错时』的办法继续」。INSTALL.md 写了常见问题的处理方法和装好的标准，它可以换一种方式完成。实在不行，把对话截图发给维护者。</p></details>
-        <details><summary>不想用 AI，自己在终端里装可以吗？</summary><p>可以。打开「终端」，粘贴下面两行回车（版本号按实际改）。缺的工具按环境检查里 → 的提示补上。</p><div class="code" data-copy="D=$(mktemp -d); unzip -q ~/Downloads/crst-safety-video-v1.6.zip -d $D
-zsh $D/crst-safety-video/scripts/install.sh">D=$(mktemp -d); unzip -q ~/Downloads/crst-safety-video-v1.6.zip -d $D
-zsh $D/crst-safety-video/scripts/install.sh</div></details>
-        <details><summary>弹出「需要安装命令行开发者工具」</summary><p>新电脑第一次用 python3 或 git 时 macOS 会弹这个框，点「安装」，等它装完（几分钟），再把安装命令运行一次。</p></details>
-        <details><summary>装完了，但 Claude Code / Codex 里用不上</summary><p>装好后要<b>重新打开 Claude Code</b>，或<b>新开一个 Codex 会话</b>，已经开着的会话看不到新 skill。再不行，运行环境检查，看 Claude Code、Codex 两行是不是 ✓。</p></details>
-        <details><summary>我自己补的 Ray 姿势，更新时会被覆盖吗？</summary><p>不会。更新时，你补进 <code>library/</code> 的新文件会自动搬到新版；旧版整份备份在 <code>~/.config/crst-safety-video/backup/</code>。好用的姿势可以发给维护者，统一收进下一版安装包。</p></details>
-        <details><summary>怎么卸载？</summary><p>删掉 <code>~/.claude/skills/crst-safety-video</code> 和 <code>~/.codex/skills/crst-safety-video</code>；配置和备份在 <code>~/.config/crst-safety-video/</code>，不需要了也可以删掉。</p></details>
-        <details><summary>我用的是 Codex，不是 Claude Code，能用吗？</summary><p>能。skill 用的是两边通用的 SKILL.md 格式，已在 Codex 0.160 上实测能加载。安装方式见「安装」里的「只用 Codex」，在 Codex 里用的区别见「在 Codex 里用的区别」。</p></details>
-        <details><summary>没有 ChatGPT 账号能生图吗？</summary><p>能。在配置文件里填一个 OpenAI 兼容接口或 Gemini 的 API key，或者用 <code>command</code> 后端接公司内部的生图工具。见「生图后端」。</p></details>
-        <details><summary>没有 MiniMax key 能用吗？</summary><p>选题、脚本、风格方向、画面静帧都能做，只有生成配音需要 key。可以先把画面做出来，拿到 key 后再配音，画面会按新的时间轴自动对齐。</p></details>
-        <details><summary>可以换画风吗？</summary><p>可以，而且每支片都会换。skill 固定的是流程，不是画风。目前做过警示海报和纸片拼贴两种。插头电线的外观用 <code>PK.setSkin()</code> 跟着画风调整，结构和校验不变。</p></details>
-        <details><summary>能做 CRST 以外的品牌或主题吗？</summary><p>流程本身通用，但素材和规则是按 CRST 和用电安全写的。换品牌要替换模板里的 logo、二维码、产品图，以及 <code>references/product-and-brand.md</code> 里的产品事实表。</p></details>
-        <details><summary>Windows 能用吗？</summary><p>没验证过。部分脚本用 zsh 和 macOS 自带的 sips 命令。生图入口 <code>imagegen.py</code> 本身只用 Python 标准库，换成 API 后端理论上可以跨平台。</p></details>
-        <details><summary>没有 Blender 和 CRST Pro 模型库，产品图怎么办？</summary><p>用官方的白底产品图。<code>tools/sticker_outline.py</code> 会抠图并加上白黑两层贴纸描边，在任何底色上都清楚。第一支片的结尾就是这样做的。</p></details>
-        <details><summary>竖屏底部为什么总是空着？</summary><p>TikTok、Reels、Shorts 的底部约 380 像素会被平台的标题、按钮挡住，skill 规定这里不放重要内容。</p></details>
-        <details><summary>会不会泄露 API key？</summary><p>key 只放在你电脑上的 <code>~/.config/crst-safety-video/config.env</code> 或环境变量里，安装包里没有，脚本也不会打印。不要把配置文件发到群里。</p></details>
+    └── tools/            <span class="c"># imagegen.py 生图入口、抠图、logo 替换、产品渲染、字幕</span></div><p style="margin-top:10px">各姿势的原始生成帧（约 44 MB）不在安装包里，在维护者那里，只有重新切口型补丁时才需要。</p></details>
       </div>
     </section>
 
