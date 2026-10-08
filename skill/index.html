@@ -195,10 +195,12 @@ td .req { display: inline-block; margin-left: 6px; font: 700 10.5px/1 var(--f-mo
 
 
 .prep { margin: 0 0 8px; padding: 0; list-style: none; display: grid; gap: 10px; counter-reset: p; }
-.prep li { position: relative; background: var(--white); border-radius: 12px; box-shadow: var(--shadow); padding: 16px 18px 16px 58px; font-size: 15px; color: var(--ink-2); counter-increment: p; }
-.prep li::before { content: counter(p); position: absolute; left: 18px; top: 16px; width: 26px; height: 26px; border-radius: 50%; background: var(--yel); color: var(--ink); font: 800 14px/26px var(--f-mono); text-align: center; }
-.prep li > b:first-child { display: block; color: var(--ink); margin-bottom: 2px; }
+.prep > li { position: relative; background: var(--white); border-radius: 12px; box-shadow: var(--shadow); padding: 16px 18px 16px 58px; font-size: 15px; color: var(--ink-2); counter-increment: p; }
+.prep > li::before { content: counter(p); position: absolute; left: 18px; top: 16px; width: 26px; height: 26px; border-radius: 50%; background: var(--yel); color: var(--ink); font: 800 14px/26px var(--f-mono); text-align: center; }
+.prep > li > b:first-child { display: block; color: var(--ink); margin-bottom: 2px; }
 .prep b.i { color: var(--ink); }
+.prep .ticks { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; list-style: disc; }
+.faq .code { margin: 10px 0 4px; }
 .diffs { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
 .diffs li { background: var(--white); border-radius: 12px; box-shadow: var(--shadow); padding: 14px 18px; font-size: 15px; color: var(--ink-2); }
 .diffs li b { display: block; color: var(--ink); margin-bottom: 2px; }
@@ -371,15 +373,15 @@ footer { border-top: 1px solid var(--line); padding: 28px 32px 40px; color: var(
     </section>
 
     <section id="require">
-      <div class="h2"><div class="eyebrow">环境要求</div><h2>装之前先准备这些</h2><p>只在 macOS 上验证过。不用一项项对照：装完运行环境检查，它会告诉你缺什么、怎么补。</p></div>
+      <div class="h2"><div class="eyebrow">环境要求</div><h2>装之前先准备这些</h2><p>只在 macOS 上验证过。不用一项项对照：安装时 AI 会检查并补齐，最后告诉你还缺什么。</p></div>
       <div class="tbl-box">
         <table>
           <thead><tr><th>需要</th><th>用途</th><th>怎么准备</th></tr></thead>
           <tbody>
             <tr><td>Claude Code 或 Codex<span class="req">二选一</span></td><td>运行这个 skill</td><td>Claude 桌面版的 Code 页或 <code>claude</code> 命令；Codex 应用或 <code>codex</code> 命令。两个都装也行</td></tr>
             <tr><td>安装包<span class="req">必需</span></td><td>安装和更新 skill</td><td>公司群里的 <code>crst-safety-video-v1.6.zip</code>（16 MB），存到「下载」文件夹</td></tr>
-            <tr><td>uv、ffmpeg<span class="req">必需</span></td><td>运行脚本、合成音视频</td><td><code>brew install uv ffmpeg</code>（需要先有 Homebrew，见「安装」第 3 步）</td></tr>
-            <tr><td>Playwright Chromium<span class="req">必需</span></td><td>逐帧渲染画面</td><td><code>uv run --with playwright playwright install chromium</code></td></tr>
+            <tr><td>uv、ffmpeg<span class="req">必需</span></td><td>运行脚本、合成音视频</td><td>安装时 AI 会帮你装</td></tr>
+            <tr><td>Playwright Chromium<span class="req">必需</span></td><td>逐帧渲染画面</td><td>安装时 AI 会帮你装</td></tr>
             <tr><td>MiniMax API key<span class="req">配音需要</span></td><td>英文配音</td><td>填进配置文件</td></tr>
             <tr><td>一个生图后端<span class="req">生图需要</span></td><td>角色动作、背景、道具</td><td>本机 Codex 或任一生图 API，见下方「生图后端」</td></tr>
             <tr><td>Blender＋CRST Pro 模型<span class="opt">可选</span></td><td>渲染真实产品图</td><td>没有就用官方产品白底图，脚本会抠图加描边</td></tr>
@@ -389,34 +391,18 @@ footer { border-top: 1px solid var(--line); padding: 28px 32px 40px; color: var(
     </section>
 
     <section id="install">
-      <div class="h2"><div class="eyebrow">安装</div><h2>三步装好</h2><p>不需要 GitHub 账号。安装包在公司群里，装一次大约 5 分钟。</p></div>
+      <div class="h2"><div class="eyebrow">安装</div><h2>把安装包交给 AI，让它来装</h2><p>不需要 GitHub 账号，也不用自己敲命令。每台电脑环境不一样，安装包里有一份写给 AI 的安装指南 <code>INSTALL.md</code>：Claude Code 或 Codex 会按你电脑的实际情况处理，某一步出错会自己换办法。</p></div>
 
       <ol class="prep">
-        <li><b>从公司群下载安装包</b>文件名是 <code>crst-safety-video-v1.6.zip</code>（16 MB，版本号以群里最新的为准）。<b class="i">存到「下载」文件夹</b>：微信里右键文件选「另存为」，飞书、钉钉默认就存在「下载」里。不用自己解压。</li>
-        <li><b>安装（两种方法任选一种）</b>
-          <div class="methods" style="margin-top:12px">
-            <div class="m rec">
-              <span class="badge">推荐</span>
-              <h3>让 Claude Code 或 Codex 帮你装</h3>
-              <p>在 Claude Code 或 Codex 里粘贴这句话。它会解压、装好、检查环境，缺的工具也会帮你装。中途请求运行命令、联网或写入文件时点允许。</p>
-              <div class="prompt" data-copy="帮我安装 crst-safety-video skill：安装包在「下载」文件夹里，文件名是 crst-safety-video-v 加版本号的 zip（找不到就问我放在哪）。把它解压到一个临时文件夹，运行里面的 scripts/install.sh；然后看环境检查还缺什么，能装的帮我装上，需要我自己做的告诉我怎么做。">帮我安装 crst-safety-video skill：安装包在「下载」文件夹里，文件名是 crst-safety-video-v 加版本号的 zip（找不到就问我放在哪）。把它解压到一个临时文件夹，运行里面的 scripts/install.sh；然后看环境检查还缺什么，能装的帮我装上，需要我自己做的告诉我怎么做。</div>
-            </div>
-            <div class="m">
-              <h3>在终端里粘贴两行命令</h3>
-              <p>打开「终端」（启动台里搜「终端」），粘贴后回车。版本号不是 1.6 的，把命令里的 <code>1.6</code> 改成群里文件名上的版本号。</p>
-              <div class="code" data-copy="D=$(mktemp -d); unzip -q ~/Downloads/crst-safety-video-v1.6.zip -d $D
-zsh $D/crst-safety-video/scripts/install.sh">D=$(mktemp -d); unzip -q ~/Downloads/crst-safety-video-v1.6.zip -d $D
-zsh $D/crst-safety-video/scripts/install.sh</div>
-              <p>它会检测本机装了 Claude Code 还是 Codex，复制到对应的 skills 目录（<code>~/.claude/skills/</code> 或 <code>~/.codex/skills/</code>）；两个都有就只放一份，另一个放链接。最后创建配置文件，跑一遍环境检查。想指定只装一个，在第二行末尾加 <code>--claude</code> 或 <code>--codex</code>。</p>
-            </div>
-          </div>
-        </li>
-        <li><b>补齐工具</b>环境检查里打 ✗ 的，按它给的 → 命令补上，补完再检查一次。大多数电脑需要：
-          <div class="code" data-copy="brew install uv ffmpeg
-uv run --with playwright playwright install chromium">brew install uv ffmpeg
-uv run --with playwright playwright install chromium</div>
-          提示 <code>command not found: brew</code> 的，先装 Homebrew（官方安装命令，过程中要输入开机密码，可能顺带装 Xcode 命令行工具，等它跑完，再按它最后提示的 Next steps 执行，或重新打开终端）：
-          <div class="code" data-copy='/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</div></li>
+        <li><b>从公司群下载安装包</b>文件名是 <code>crst-safety-video-v1.6.zip</code>（16 MB，以群里最新版本为准）。<b class="i">存到「下载」文件夹</b>：微信里右键文件选「另存为」；飞书、钉钉默认就存在「下载」里。不用自己解压。</li>
+        <li><b>交给 Claude Code 或 Codex</b>打开任意一个，把 zip <b class="i">拖进对话框</b>（会自动填上文件路径；不拖也行，它会去「下载」里找），再粘贴下面这句话发送：
+          <div class="prompt" style="margin-top:10px" data-copy="帮我安装 crst-safety-video skill。安装包是我拖进来的 zip；没拖的话，在「下载」文件夹里找 crst-safety-video-v 开头的 zip，找不到就问我。先解压到临时文件夹，读里面的 INSTALL.md，按它把 skill 装好、补齐依赖、跑环境检查，最后告诉我结果和还需要我做的事。">帮我安装 crst-safety-video skill。安装包是我拖进来的 zip；没拖的话，在「下载」文件夹里找 crst-safety-video-v 开头的 zip，找不到就问我。先解压到临时文件夹，读里面的 INSTALL.md，按它把 skill 装好、补齐依赖、跑环境检查，最后告诉我结果和还需要我做的事。</div></li>
+        <li><b>中途点允许</b>它要运行命令、联网、写入 skills 目录时会征求你同意，点允许。装依赖（uv、ffmpeg、Playwright 浏览器）要下载一两百 MB，等它跑完。如果电脑没有 Homebrew，安装要输入开机密码，<b class="i">它会把命令给你，请你自己在「终端」里运行</b>，运行完告诉它继续。</li>
+        <li><b>按它给的清单收尾</b>通常只剩两件事：
+          <ul class="ticks">
+            <li><b class="i">填配音 key</b>：它会帮你打开配置文件 <code>~/.config/crst-safety-video/config.env</code>，你自己把 MiniMax key 填在 <code>MINIMAX_API_KEY=</code> 后面保存。<b class="i">不要把 key 发到对话里。</b></li>
+            <li><b class="i">重新打开 Claude Code</b>，或<b class="i">新开一个 Codex 会话</b>，新 skill 才会出现。</li>
+          </ul></li>
       </ol>
 
       <h3 class="sub-h">装好之后：填配置</h3>
@@ -443,9 +429,9 @@ IMAGEGEN_BACKEND=</div>
 当前会用：codex</div>
 
       <h3 class="sub-h">以后更新</h3>
-      <p class="plain">群里发了新版安装包，按上面第 1、2 步再装一遍就行。旧版本会挪到 <code>~/.config/crst-safety-video/backup/</code>；你自己补进角色库的新姿势会自动搬到新版里；配置文件不动。查看当前装的版本：</p>
-      <div class="code" data-copy="python3 ~/.claude/skills/crst-safety-video/scripts/doctor.py | head -1">python3 ~/.claude/skills/crst-safety-video/scripts/doctor.py | head -1</div>
-      <p class="plain">（只用 Codex 的把路径里的 <code>.claude</code> 换成 <code>.codex</code>。）</p>
+      <p class="plain">群里发了新版安装包，同样拖给 Claude Code 或 Codex，说：</p>
+      <div class="prompt" data-copy="按这个安装包里的 INSTALL.md 帮我更新 crst-safety-video skill，最后告诉我更新到了哪个版本。">按这个安装包里的 INSTALL.md 帮我更新 crst-safety-video skill，最后告诉我更新到了哪个版本。</div>
+      <p class="plain" style="margin-top:10px">旧版本会挪到 <code>~/.config/crst-safety-video/backup/</code>；你自己补进角色库的新姿势会保留；配置文件不动。</p>
       <div class="callout"><b>装好后重新打开 Claude Code，或新开一个 Codex 会话。</b>提到用电安全视频、插排科普、CRST 视频时会自动用上这个 skill；也可以直接说「用 crst-safety-video」。</div>
 
       <h3 class="sub-h">在 Codex 里用的区别</h3>
@@ -542,8 +528,10 @@ uv run --with playwright python render_film.py --o h --out ../成片/片名_16x9
     <section id="faq">
       <div class="h2"><div class="eyebrow">常见问题</div><h2>常见问题</h2></div>
       <div class="faq">
-        <details><summary>找不到安装包 / 提示 cannot find or open</summary><p>说明「下载」文件夹里没有这个文件名的 zip。确认文件存进了「下载」（微信要右键「另存为」），文件名的版本号和命令里的一致。也可以在 Finder 里把 zip 拖进「下载」文件夹再试。</p></details>
-        <details><summary>提示 command not found: brew / uv / ffmpeg</summary><p>工具还没装，按「安装」第 3 步补上。刚装完 Homebrew 的，要按它最后提示的 Next steps 执行那两行，或重新打开终端。</p></details>
+        <details><summary>AI 装到一半卡住或报错怎么办？</summary><p>直接把报错告诉它，或者说「按 INSTALL.md 里『出错时』的办法继续」。INSTALL.md 写了常见问题的处理方法和装好的标准，它可以换一种方式完成。实在不行，把对话截图发给维护者。</p></details>
+        <details><summary>不想用 AI，自己在终端里装可以吗？</summary><p>可以。打开「终端」，粘贴下面两行回车（版本号按实际改）。缺的工具按环境检查里 → 的提示补上。</p><div class="code" data-copy="D=$(mktemp -d); unzip -q ~/Downloads/crst-safety-video-v1.6.zip -d $D
+zsh $D/crst-safety-video/scripts/install.sh">D=$(mktemp -d); unzip -q ~/Downloads/crst-safety-video-v1.6.zip -d $D
+zsh $D/crst-safety-video/scripts/install.sh</div></details>
         <details><summary>弹出「需要安装命令行开发者工具」</summary><p>新电脑第一次用 python3 或 git 时 macOS 会弹这个框，点「安装」，等它装完（几分钟），再把安装命令运行一次。</p></details>
         <details><summary>装完了，但 Claude Code / Codex 里用不上</summary><p>装好后要<b>重新打开 Claude Code</b>，或<b>新开一个 Codex 会话</b>，已经开着的会话看不到新 skill。再不行，运行环境检查，看 Claude Code、Codex 两行是不是 ✓。</p></details>
         <details><summary>我自己补的 Ray 姿势，更新时会被覆盖吗？</summary><p>不会。更新时，你补进 <code>library/</code> 的新文件会自动搬到新版；旧版整份备份在 <code>~/.config/crst-safety-video/backup/</code>。好用的姿势可以发给维护者，统一收进下一版安装包。</p></details>
@@ -563,7 +551,7 @@ uv run --with playwright python render_film.py --o h --out ../成片/片名_16x9
     <section id="versions">
       <div class="h2"><div class="eyebrow">版本记录</div><h2>版本记录</h2></div>
       <ol class="versions">
-        <li><b>v1.6</b><span>2026-10-08</span><p>改为安装包分发：不需要 GitHub 账号，群里下载 zip，运行安装脚本就装好；更新时旧版自动备份，自己补的角色姿势自动保留。环境检查显示版本号。</p></li>
+        <li><b>v1.6</b><span>2026-10-08</span><p>改为安装包分发、交给 AI 安装：不需要 GitHub 账号；包里新增写给 AI 的 INSTALL.md，Claude Code 或 Codex 按电脑实际情况安装，出错能换路；更新时旧版自动备份，自己补的角色姿势自动保留。</p></li>
         <li><b>v1.5</b><span>2026-10-08</span><p>同时支持 Codex：安装脚本自动装给本机的 Claude Code 和 Codex，仓库只留一份；补充在 Codex 里运行的注意事项。</p></li>
         <li><b>v1.4</b><span>2026-10-08 · 上传 GitHub</span><p>生图后端可换：本机 Codex、OpenAI 兼容 API、Gemini API、Antigravity、自定义命令；key 统一放配置文件；新增安装脚本和环境检查。</p></li>
         <li><b>v1.3</b><span>2026-10-08</span><p>新增 Ray 2D 角色库（10 个姿势，含口型和眨眼），角色动画拆成独立模块；新增库同步和打包脚本；帽徽按帽檐角度贴正。</p></li>
