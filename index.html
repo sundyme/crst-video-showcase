@@ -132,7 +132,7 @@ section { padding-block: 112px 0; }
 .lane .row span { font-size: 14px; color: var(--muted); }
 .bar { height: 12px; border-radius: 99px; background: var(--paper); overflow: hidden; }
 .bar i { display: block; height: 100%; border-radius: 99px; }
-.versions { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); position: relative; padding-top: 8px; border-top: 1px solid var(--line); }
+.versions { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); position: relative; padding-top: 8px; border-top: 1px solid var(--line); }
 .versions::before { content: ""; position: absolute; left: 10px; right: 30px; top: 27px; height: 2px; background: var(--line); }
 .versions div { position: relative; display: grid; gap: 6px; padding: 10px 10px 0 0; }
 .versions div::before { content: ""; width: 20px; height: 20px; border-radius: 50%; background: var(--white); border: 2px solid var(--yel); }
@@ -140,7 +140,7 @@ section { padding-block: 112px 0; }
 .versions b { font: 700 13px/1 var(--f-mono); }
 .versions span { font-size: 13px; color: var(--muted); line-height: 1.5; }
 @media (max-width: 900px) { .skill { grid-template-columns: minmax(0, 1fr); gap: 28px; } }
-@media (max-width: 760px) { .versions { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 14px; } .versions::before { display: none; } } @media (max-width: 520px) { .versions { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 14px; } .versions::before { display: none; } .race { padding: 22px; } }
+@media (max-width: 760px) { .versions { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 14px; } .versions::before { display: none; } } @media (max-width: 520px) { .versions { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 14px; } .versions::before { display: none; } .race { padding: 22px; } }
 
 /* 两个 Skill */
 .whatis { margin-top: 72px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 40px; align-items: start; padding-top: 48px; border-top: 1px solid var(--line); }
@@ -395,6 +395,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <div><b>v1.3</b><span>Ray 角色素材库入库</span></div>
         <div><b>v1.4</b><span>生图后端可换</span></div>
         <div><b>v1.5</b><span>同时支持 Codex</span></div>
+        <div><b>v1.6</b><span>群里发安装包即可装</span></div>
       </div>
     </div>
   </div>
@@ -403,7 +404,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <h3>这次用到的两个 Skill</h3>
       <div>
         <p>Skill 是一个文件夹：一份写给 Claude 的流程说明，加上参考文档、代码模板和素材。装进 Claude Code 以后，遇到相关任务它会自动读取，按里面的方法做。</p>
-        <p>一个是社区开源的通用动画方法，一个是我们按 CRST 的需求定制的完整流程，已放到公司 GitHub 私有仓库，同事可以直接安装。</p>
+        <p>一个是社区开源的通用动画方法，一个是我们按 CRST 的需求定制的完整流程，已打成安装包发在公司群里，同事下载后几分钟就能装好。</p>
       </div>
     </div>
     <div class="duo">
@@ -419,14 +420,14 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <a class="ext" href="https://github.com/alchaincyf/huashu-art-motion" target="_blank" rel="noopener">GitHub 主页 →</a>
       </article>
       <article class="sk mine">
-        <span class="tag">公司定制 · v1.5</span>
+        <span class="tag">公司定制 · v1.6</span>
         <h3>crst-safety-video</h3>
         <div class="role">CRST 用电安全科普视频制作流程</div>
         <p>从两支成片总结出来，专门做 CRST 插排的美国市场科普短片。说一句「做一支用电安全科普视频」，就按 8 步流程走到交付。Claude Code 和 Codex 都能用。</p>
         <dl>
           <dt>核心能力</dt><dd>PlugKit 接线零件库与逐帧校验；配音驱动的时间轴；Ray 2D 角色库；工程模板；验收清单</dd>
           <dt>生图</dt><dd>后端可换：本机 Codex、OpenAI 兼容 API、Gemini API 或自定义工具</dd>
-          <dt>安装</dt><dd>在 Claude Code 或 Codex 里让它照安装页装，或运行仓库里的 <code>install.sh</code>，会自动装给本机已有的工具</dd>
+          <dt>安装</dt><dd>从公司群下载安装包，交给 Claude Code 或 Codex 装，或在终端运行两行命令；不需要 GitHub 账号</dd>
         </dl>
         <a class="go" href="skill/">查看功能与安装说明 →</a>
       </article>

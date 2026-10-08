@@ -194,6 +194,11 @@ td .req { display: inline-block; margin-left: 6px; font: 700 10.5px/1 var(--f-mo
 .term .ok { color: #6FE0B8; } .term .no { color: #FF8A7A; }
 
 
+.prep { margin: 0 0 8px; padding: 0; list-style: none; display: grid; gap: 10px; counter-reset: p; }
+.prep li { position: relative; background: var(--white); border-radius: 12px; box-shadow: var(--shadow); padding: 16px 18px 16px 58px; font-size: 15px; color: var(--ink-2); counter-increment: p; }
+.prep li::before { content: counter(p); position: absolute; left: 18px; top: 16px; width: 26px; height: 26px; border-radius: 50%; background: var(--yel); color: var(--ink); font: 800 14px/26px var(--f-mono); text-align: center; }
+.prep li > b:first-child { display: block; color: var(--ink); margin-bottom: 2px; }
+.prep b.i { color: var(--ink); }
 .diffs { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
 .diffs li { background: var(--white); border-radius: 12px; box-shadow: var(--shadow); padding: 14px 18px; font-size: 15px; color: var(--ink-2); }
 .diffs li b { display: block; color: var(--ink); margin-bottom: 2px; }
@@ -249,13 +254,13 @@ footer { border-top: 1px solid var(--line); padding: 28px 32px 40px; color: var(
     </div>
     <div class="hero">
       <div>
-        <div class="eyebrow">Agent Skill · Claude Code ＋ Codex · v1.5</div>
+        <div class="eyebrow">Agent Skill · Claude Code ＋ Codex · v1.6</div>
         <h1>crst-safety-video</h1>
         <p class="sub">CRST 用电安全科普视频制作流程</p>
         <p class="lede">装上它，在 Claude Code 或 Codex 里说一句「做一支用电安全科普视频」，AI 就会按两支成片总结出来的流程做：选题、脚本、配音、动画、横竖两版成片、字幕和发布文案。每个需要拍板的地方都会停下来问你。</p>
         <div class="actions">
           <a class="btn yel" href="#install">安装步骤</a>
-          <a class="btn" href="https://github.com/sundyme/crst-safety-video" target="_blank" rel="noopener">GitHub 仓库 ↗</a>
+          <a class="btn" href="#faq">常见问题</a>
         </div>
         <div class="meta"><span><b>适用</b> Claude Code · Codex</span><span><b>系统</b> macOS</span><span><b>语言</b> 中文流程 · 英文成片</span><span><b>生图</b> Codex / API 可选</span><span><b>范围</b> 公司内部使用</span></div>
       </div>
@@ -372,8 +377,8 @@ footer { border-top: 1px solid var(--line); padding: 28px 32px 40px; color: var(
           <thead><tr><th>需要</th><th>用途</th><th>怎么准备</th></tr></thead>
           <tbody>
             <tr><td>Claude Code 或 Codex<span class="req">二选一</span></td><td>运行这个 skill</td><td>Claude 桌面版的 Code 页或 <code>claude</code> 命令；Codex 应用或 <code>codex</code> 命令。两个都装也行</td></tr>
-            <tr><td>GitHub 权限<span class="req">必需</span></td><td>下载和更新 skill</td><td>请管理员把你的 GitHub 账号加为仓库协作者；本机 <code>gh auth login</code></td></tr>
-            <tr><td>uv、ffmpeg<span class="req">必需</span></td><td>运行脚本、合成音视频</td><td><code>brew install uv ffmpeg</code></td></tr>
+            <tr><td>安装包<span class="req">必需</span></td><td>安装和更新 skill</td><td>公司群里的 <code>crst-safety-video-v1.6.zip</code>（16 MB），存到「下载」文件夹</td></tr>
+            <tr><td>uv、ffmpeg<span class="req">必需</span></td><td>运行脚本、合成音视频</td><td><code>brew install uv ffmpeg</code>（需要先有 Homebrew，见「安装」第 3 步）</td></tr>
             <tr><td>Playwright Chromium<span class="req">必需</span></td><td>逐帧渲染画面</td><td><code>uv run --with playwright playwright install chromium</code></td></tr>
             <tr><td>MiniMax API key<span class="req">配音需要</span></td><td>英文配音</td><td>填进配置文件</td></tr>
             <tr><td>一个生图后端<span class="req">生图需要</span></td><td>角色动作、背景、道具</td><td>本机 Codex 或任一生图 API，见下方「生图后端」</td></tr>
@@ -384,40 +389,38 @@ footer { border-top: 1px solid var(--line); padding: 28px 32px 40px; color: var(
     </section>
 
     <section id="install">
-      <div class="h2"><div class="eyebrow">安装</div><h2>三种装法，Claude Code 和 Codex 都适用</h2><p>代码放在 GitHub 私有仓库 <a href="https://github.com/sundyme/crst-safety-video" target="_blank" rel="noopener"><code>sundyme/crst-safety-video</code></a>。第一次装之前，先请管理员把你的 GitHub 账号加为协作者。</p></div>
-      <div class="methods">
-        <div class="m rec">
-          <span class="badge">推荐</span>
-          <h3>让 Claude Code 或 Codex 帮你装</h3>
-          <p>在 Claude Code 或 Codex 里粘贴这句话。它会克隆仓库、装给本机的 Claude Code 和 Codex、创建配置文件、检查环境，缺什么会告诉你怎么补。</p>
-          <div class="prompt" data-copy="帮我安装这个 skill：https://github.com/sundyme/crst-safety-video 。先克隆到本机，再运行仓库里的 scripts/install.sh（它会装给本机的 Claude Code 和 Codex），最后告诉我 doctor 检查结果里还缺什么、怎么补。">帮我安装这个 skill：https://github.com/sundyme/crst-safety-video 。先克隆到本机，再运行仓库里的 scripts/install.sh（它会装给本机的 Claude Code 和 Codex），最后告诉我 doctor 检查结果里还缺什么、怎么补。</div>
-        </div>
-        <div class="m">
-          <h3>两行命令</h3>
-          <p>在终端里执行。第二行会检测本机装了 Claude Code 还是 Codex：仓库只保留一份，另一个工具的 skills 目录里放一个链接，更新一次两边都生效。</p>
-          <p><b>用 Claude Code（或两个都用）</b></p>
-          <div class="code" data-copy="gh repo clone sundyme/crst-safety-video ~/.claude/skills/crst-safety-video
-zsh ~/.claude/skills/crst-safety-video/scripts/install.sh">gh repo clone sundyme/crst-safety-video ~/.claude/skills/crst-safety-video
-zsh ~/.claude/skills/crst-safety-video/scripts/install.sh</div>
-          <p><b>只用 Codex</b></p>
-          <div class="code" data-copy="gh repo clone sundyme/crst-safety-video ~/.codex/skills/crst-safety-video
-zsh ~/.codex/skills/crst-safety-video/scripts/install.sh">gh repo clone sundyme/crst-safety-video ~/.codex/skills/crst-safety-video
-zsh ~/.codex/skills/crst-safety-video/scripts/install.sh</div>
-          <p>想手动指定：在第二行末尾加 <code>--claude</code>、<code>--codex</code> 或 <code>--both</code>。</p>
-        </div>
-        <div class="m">
-          <h3>下载 zip</h3>
-          <p>不想用 git 时，在仓库的 <a href="https://github.com/sundyme/crst-safety-video/releases/latest" target="_blank" rel="noopener">Releases 页面</a> 下载 <code>crst-safety-video-v1.5.zip</code>（16 MB），解压到 <code>~/.claude/skills/</code>（Claude Code）或 <code>~/.codex/skills/</code>（Codex），再创建配置文件、运行环境检查。以 Codex 为例：</p>
-          <div class="code" data-copy="unzip -o ~/Downloads/crst-safety-video-v1.5.zip -d ~/.codex/skills/
-mkdir -p ~/.config/crst-safety-video && cp ~/.codex/skills/crst-safety-video/config.example.env ~/.config/crst-safety-video/config.env
-python3 ~/.codex/skills/crst-safety-video/scripts/doctor.py">unzip -o ~/Downloads/crst-safety-video-v1.5.zip -d ~/.codex/skills/
-mkdir -p ~/.config/crst-safety-video && cp ~/.codex/skills/crst-safety-video/config.example.env ~/.config/crst-safety-video/config.env
-python3 ~/.codex/skills/crst-safety-video/scripts/doctor.py</div>
-        </div>
-      </div>
+      <div class="h2"><div class="eyebrow">安装</div><h2>三步装好</h2><p>不需要 GitHub 账号。安装包在公司群里，装一次大约 5 分钟。</p></div>
+
+      <ol class="prep">
+        <li><b>从公司群下载安装包</b>文件名是 <code>crst-safety-video-v1.6.zip</code>（16 MB，版本号以群里最新的为准）。<b class="i">存到「下载」文件夹</b>：微信里右键文件选「另存为」，飞书、钉钉默认就存在「下载」里。不用自己解压。</li>
+        <li><b>安装（两种方法任选一种）</b>
+          <div class="methods" style="margin-top:12px">
+            <div class="m rec">
+              <span class="badge">推荐</span>
+              <h3>让 Claude Code 或 Codex 帮你装</h3>
+              <p>在 Claude Code 或 Codex 里粘贴这句话。它会解压、装好、检查环境，缺的工具也会帮你装。中途请求运行命令、联网或写入文件时点允许。</p>
+              <div class="prompt" data-copy="帮我安装 crst-safety-video skill：安装包在「下载」文件夹里，文件名是 crst-safety-video-v 加版本号的 zip（找不到就问我放在哪）。把它解压到一个临时文件夹，运行里面的 scripts/install.sh；然后看环境检查还缺什么，能装的帮我装上，需要我自己做的告诉我怎么做。">帮我安装 crst-safety-video skill：安装包在「下载」文件夹里，文件名是 crst-safety-video-v 加版本号的 zip（找不到就问我放在哪）。把它解压到一个临时文件夹，运行里面的 scripts/install.sh；然后看环境检查还缺什么，能装的帮我装上，需要我自己做的告诉我怎么做。</div>
+            </div>
+            <div class="m">
+              <h3>在终端里粘贴两行命令</h3>
+              <p>打开「终端」（启动台里搜「终端」），粘贴后回车。版本号不是 1.6 的，把命令里的 <code>1.6</code> 改成群里文件名上的版本号。</p>
+              <div class="code" data-copy="D=$(mktemp -d); unzip -q ~/Downloads/crst-safety-video-v1.6.zip -d $D
+zsh $D/crst-safety-video/scripts/install.sh">D=$(mktemp -d); unzip -q ~/Downloads/crst-safety-video-v1.6.zip -d $D
+zsh $D/crst-safety-video/scripts/install.sh</div>
+              <p>它会检测本机装了 Claude Code 还是 Codex，复制到对应的 skills 目录（<code>~/.claude/skills/</code> 或 <code>~/.codex/skills/</code>）；两个都有就只放一份，另一个放链接。最后创建配置文件，跑一遍环境检查。想指定只装一个，在第二行末尾加 <code>--claude</code> 或 <code>--codex</code>。</p>
+            </div>
+          </div>
+        </li>
+        <li><b>补齐工具</b>环境检查里打 ✗ 的，按它给的 → 命令补上，补完再检查一次。大多数电脑需要：
+          <div class="code" data-copy="brew install uv ffmpeg
+uv run --with playwright playwright install chromium">brew install uv ffmpeg
+uv run --with playwright playwright install chromium</div>
+          提示 <code>command not found: brew</code> 的，先装 Homebrew（官方安装命令，过程中要输入开机密码，可能顺带装 Xcode 命令行工具，等它跑完，再按它最后提示的 Next steps 执行，或重新打开终端）：
+          <div class="code" data-copy='/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</div></li>
+      </ol>
 
       <h3 class="sub-h">装好之后：填配置</h3>
-      <p class="plain">所有 key 和选项都在 <code>~/.config/crst-safety-video/config.env</code>。这个文件只在你的电脑上，不在仓库里，脚本也不会打印 key。用文本编辑器打开：</p>
+      <p class="plain">所有 key 和选项都在 <code>~/.config/crst-safety-video/config.env</code>。这个文件只在你的电脑上，不在安装包里，更新也不会动它，脚本也不会打印 key。用文本编辑器打开：</p>
       <div class="code" data-copy="open -e ~/.config/crst-safety-video/config.env">open -e ~/.config/crst-safety-video/config.env</div>
       <div class="code"><span class="c"># 配音（必填）</span>
 MINIMAX_API_KEY=你的key
@@ -427,7 +430,9 @@ IMAGEGEN_BACKEND=</div>
       <h3 class="sub-h">检查环境</h3>
       <p class="plain">随时可以运行，逐项打勾，缺的会给出补齐命令（只用 Codex 的把路径里的 <code>.claude</code> 换成 <code>.codex</code>）：</p>
       <div class="code" data-copy="python3 ~/.claude/skills/crst-safety-video/scripts/doctor.py">python3 ~/.claude/skills/crst-safety-video/scripts/doctor.py</div>
-      <div class="term" aria-label="环境检查输出示例"><span class="ok">✓</span> Claude Code：已安装 ~/.claude/skills/crst-safety-video
+      <div class="term" aria-label="环境检查输出示例">crst-safety-video v1.6 环境检查
+
+<span class="ok">✓</span> Claude Code：已安装 ~/.claude/skills/crst-safety-video
 <span class="ok">✓</span> Codex：已安装 ~/.codex/skills/crst-safety-video → ~/.claude/skills/crst-safety-video
 <span class="ok">✓</span> uv：/opt/homebrew/bin/uv
 <span class="ok">✓</span> ffmpeg：/opt/homebrew/bin/ffmpeg
@@ -438,8 +443,9 @@ IMAGEGEN_BACKEND=</div>
 当前会用：codex</div>
 
       <h3 class="sub-h">以后更新</h3>
-      <p class="plain">用前两种方式装的，再运行一次安装脚本就会拉取最新版（Claude Code 和 Codex 一起更新）：</p>
-      <div class="code" data-copy="zsh ~/.claude/skills/crst-safety-video/scripts/install.sh">zsh ~/.claude/skills/crst-safety-video/scripts/install.sh</div>
+      <p class="plain">群里发了新版安装包，按上面第 1、2 步再装一遍就行。旧版本会挪到 <code>~/.config/crst-safety-video/backup/</code>；你自己补进角色库的新姿势会自动搬到新版里；配置文件不动。查看当前装的版本：</p>
+      <div class="code" data-copy="python3 ~/.claude/skills/crst-safety-video/scripts/doctor.py | head -1">python3 ~/.claude/skills/crst-safety-video/scripts/doctor.py | head -1</div>
+      <p class="plain">（只用 Codex 的把路径里的 <code>.claude</code> 换成 <code>.codex</code>。）</p>
       <div class="callout"><b>装好后重新打开 Claude Code，或新开一个 Codex 会话。</b>提到用电安全视频、插排科普、CRST 视频时会自动用上这个 skill；也可以直接说「用 crst-safety-video」。</div>
 
       <h3 class="sub-h">在 Codex 里用的区别</h3>
@@ -530,12 +536,18 @@ uv run --with playwright python render_film.py --o h --out ../成片/片名_16x9
     ├── 代码工程/          <span class="c"># 画面运行时、PlugKit、ray2d.js、渲染脚本、字体、角色成品帧</span>
     ├── 音频/              <span class="c"># 配音、口型、配乐与混音脚本</span>
     └── tools/            <span class="c"># imagegen.py 生图入口、抠图、logo 替换、产品渲染、字幕</span></div>
-      <p style="margin-top:14px;color:var(--muted);font-size:14px"><code>library/ray2d/source/</code> 只带母版和参考图；各姿势的原始生成帧（约 44 MB）只在 GitHub 仓库里，zip 包不带；只有重新切口型补丁时才需要。</p>
+      <p style="margin-top:14px;color:var(--muted);font-size:14px"><code>library/ray2d/source/</code> 只带母版和参考图；各姿势的原始生成帧（约 44 MB）不在安装包里，在维护者那里；只有重新切口型补丁时才需要。</p>
     </section>
 
     <section id="faq">
       <div class="h2"><div class="eyebrow">常见问题</div><h2>常见问题</h2></div>
       <div class="faq">
+        <details><summary>找不到安装包 / 提示 cannot find or open</summary><p>说明「下载」文件夹里没有这个文件名的 zip。确认文件存进了「下载」（微信要右键「另存为」），文件名的版本号和命令里的一致。也可以在 Finder 里把 zip 拖进「下载」文件夹再试。</p></details>
+        <details><summary>提示 command not found: brew / uv / ffmpeg</summary><p>工具还没装，按「安装」第 3 步补上。刚装完 Homebrew 的，要按它最后提示的 Next steps 执行那两行，或重新打开终端。</p></details>
+        <details><summary>弹出「需要安装命令行开发者工具」</summary><p>新电脑第一次用 python3 或 git 时 macOS 会弹这个框，点「安装」，等它装完（几分钟），再把安装命令运行一次。</p></details>
+        <details><summary>装完了，但 Claude Code / Codex 里用不上</summary><p>装好后要<b>重新打开 Claude Code</b>，或<b>新开一个 Codex 会话</b>，已经开着的会话看不到新 skill。再不行，运行环境检查，看 Claude Code、Codex 两行是不是 ✓。</p></details>
+        <details><summary>我自己补的 Ray 姿势，更新时会被覆盖吗？</summary><p>不会。更新时，你补进 <code>library/</code> 的新文件会自动搬到新版；旧版整份备份在 <code>~/.config/crst-safety-video/backup/</code>。好用的姿势可以发给维护者，统一收进下一版安装包。</p></details>
+        <details><summary>怎么卸载？</summary><p>删掉 <code>~/.claude/skills/crst-safety-video</code> 和 <code>~/.codex/skills/crst-safety-video</code>；配置和备份在 <code>~/.config/crst-safety-video/</code>，不需要了也可以删掉。</p></details>
         <details><summary>我用的是 Codex，不是 Claude Code，能用吗？</summary><p>能。skill 用的是两边通用的 SKILL.md 格式，已在 Codex 0.160 上实测能加载。安装方式见「安装」里的「只用 Codex」，在 Codex 里用的区别见「在 Codex 里用的区别」。</p></details>
         <details><summary>没有 ChatGPT 账号能生图吗？</summary><p>能。在配置文件里填一个 OpenAI 兼容接口或 Gemini 的 API key，或者用 <code>command</code> 后端接公司内部的生图工具。见「生图后端」。</p></details>
         <details><summary>没有 MiniMax key 能用吗？</summary><p>选题、脚本、风格方向、画面静帧都能做，只有生成配音需要 key。可以先把画面做出来，拿到 key 后再配音，画面会按新的时间轴自动对齐。</p></details>
@@ -544,13 +556,14 @@ uv run --with playwright python render_film.py --o h --out ../成片/片名_16x9
         <details><summary>Windows 能用吗？</summary><p>没验证过。部分脚本用 zsh 和 macOS 自带的 sips 命令。生图入口 <code>imagegen.py</code> 本身只用 Python 标准库，换成 API 后端理论上可以跨平台。</p></details>
         <details><summary>没有 Blender 和 CRST Pro 模型库，产品图怎么办？</summary><p>用官方的白底产品图。<code>tools/sticker_outline.py</code> 会抠图并加上白黑两层贴纸描边，在任何底色上都清楚。第一支片的结尾就是这样做的。</p></details>
         <details><summary>竖屏底部为什么总是空着？</summary><p>TikTok、Reels、Shorts 的底部约 380 像素会被平台的标题、按钮挡住，skill 规定这里不放重要内容。</p></details>
-        <details><summary>会不会泄露 API key？</summary><p>key 只放在你电脑上的 <code>~/.config/crst-safety-video/config.env</code> 或环境变量里，仓库里没有，脚本也不会打印。上传 GitHub 前检查过全部提交历史，没有任何 key。</p></details>
+        <details><summary>会不会泄露 API key？</summary><p>key 只放在你电脑上的 <code>~/.config/crst-safety-video/config.env</code> 或环境变量里，安装包里没有，脚本也不会打印。不要把配置文件发到群里。</p></details>
       </div>
     </section>
 
     <section id="versions">
       <div class="h2"><div class="eyebrow">版本记录</div><h2>版本记录</h2></div>
       <ol class="versions">
+        <li><b>v1.6</b><span>2026-10-08</span><p>改为安装包分发：不需要 GitHub 账号，群里下载 zip，运行安装脚本就装好；更新时旧版自动备份，自己补的角色姿势自动保留。环境检查显示版本号。</p></li>
         <li><b>v1.5</b><span>2026-10-08</span><p>同时支持 Codex：安装脚本自动装给本机的 Claude Code 和 Codex，仓库只留一份；补充在 Codex 里运行的注意事项。</p></li>
         <li><b>v1.4</b><span>2026-10-08 · 上传 GitHub</span><p>生图后端可换：本机 Codex、OpenAI 兼容 API、Gemini API、Antigravity、自定义命令；key 统一放配置文件；新增安装脚本和环境检查。</p></li>
         <li><b>v1.3</b><span>2026-10-08</span><p>新增 Ray 2D 角色库（10 个姿势，含口型和眨眼），角色动画拆成独立模块；新增库同步和打包脚本；帽徽按帽檐角度贴正。</p></li>
@@ -590,7 +603,7 @@ uv run --with playwright python render_film.py --o h --out ../成片/片名_16x9
   </main>
 </div>
 
-<footer>crst-safety-video v1.5 · 公司内部使用 · <a href="https://github.com/sundyme/crst-safety-video" target="_blank" rel="noopener">github.com/sundyme/crst-safety-video</a></footer>
+<footer>crst-safety-video v1.6 · 公司内部使用，请勿外传</footer>
 
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-labelledby="lb-title" hidden>
   <figure>
