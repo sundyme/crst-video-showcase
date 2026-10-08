@@ -421,7 +421,7 @@ footer { border-top: 1px solid var(--line); padding: 28px 32px 40px; color: var(
     </section>
 
     <section id="use">
-      <div class="h2"><div class="eyebrow">使用</div><h2>新建一个空文件夹，打开它，然后直接说</h2><p>AI 会建好工程，之后每个需要拍板的地方（选题、风格、声音、审片意见）都会停下来问你。成片、字幕、发布文案都放在这个文件夹里。</p></div>
+      <div class="h2"><div class="eyebrow">使用</div><h2>新建一个空文件夹，打开它，然后直接说</h2><p>AI 会建好工程，之后每个需要拍板的地方（选题、风格、声音、审片意见）都会停下来问你。成片、字幕、发布文案都放在这个文件夹里。Windows 电脑建议建在 <code>C:\CRST视频\</code> 这样的位置，不要放在 OneDrive 同步的「文档」或「桌面」里。</p></div>
       <div class="prompts">
         <div class="prompt" data-copy="用 crst-safety-video，做一支面向美国家庭的用电安全科普视频，先给我 3 个选题。">用 crst-safety-video，做一支面向美国家庭的用电安全科普视频，先给我 3 个选题。<small>从零开始一支新片</small></div>
         <div class="prompt" data-copy="选题 2，用 C 风格做一版，横屏和竖屏都要。">选题 2，用 C 风格做一版，横屏和竖屏都要。<small>选定选题和风格后开做</small></div>
@@ -446,7 +446,7 @@ footer { border-top: 1px solid var(--line); padding: 28px 32px 40px; color: var(
       <div class="faq">
         <details><summary>我完全不懂代码，能用吗？</summary><p>能。这套流程就是按这个前提设计的：安装、配置、做片、排错都通过对话完成，AI 自己运行命令、改文件。你要做的是挑选题、挑风格、听配音、看成片提意见。</p></details>
         <details><summary>AI 让我输入密码、点「允许更改」，安全吗？</summary><p>装工具时会遇到：Windows 上 winget 安装时弹出「是否允许此应用对你的设备进行更改」；Mac 上安装 Homebrew（常用的软件安装工具）要输入开机密码。这两种是正常的。其他情况 AI 不应该向你要密码；遇到可疑要求，先问维护者。公司电脑没有管理员权限的，找 IT 帮忙装。</p></details>
-        <details><summary>装完了，但 Claude Code / Codex 里用不上</summary><p>装好后要<b>重新打开 Claude Code</b>，或<b>新开一个 Codex 会话</b>，已经开着的会话看不到新 skill。还不行，就说「检查一下 crst-safety-video 的环境」。</p></details>
+        <details><summary>装完了，但 Claude Code / Codex 里用不上</summary><p>装好后要<b>完全退出并重新打开 Claude Code</b>，或<b>新开一个 Codex 会话</b>：已经开着的会话看不到新 skill，也找不到刚装的工具。还不行，就说「检查一下 crst-safety-video 的环境」。</p></details>
         <details><summary>Mac 弹出「需要安装命令行开发者工具」</summary><p>新 Mac 第一次装时会弹这个框，点「安装」，等它装完（几分钟），再告诉 AI 继续。</p></details>
         <details><summary>没有 MiniMax key 能用吗？</summary><p>能先做选题、脚本、风格和画面，只有生成配音需要 key。拿到 key 后说「帮我填 MiniMax key」，再让它配音，画面会自动对齐新的配音。</p></details>
         <details><summary>没有 ChatGPT 账号能生图吗？</summary><p>能。有 OpenAI 或 Gemini 的 key，说「我想用 Gemini 生图，帮我配好」。公司有内部生图工具也能接，找维护者。</p></details>
